@@ -62,8 +62,4 @@ router.post(
   }
 );
 
-router.get("/", (req, res) => {
-  res.send("user information");
-});
-
 module.exports = router;

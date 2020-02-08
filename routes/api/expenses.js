@@ -6,6 +6,7 @@ const auth = require("../../middleware/auth");
 const User = require("../../models/User");
 const Expense = require("../../models/Expense");
 
+// ADD AN EXPENSE
 router.post(
   "/",
   [
@@ -50,12 +51,67 @@ router.post(
       const expense = await newExpense.save();
 
       res.json(expense);
-
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server Error");
     }
   }
 );
+
+// GET ALL EXPENSES FOR USER
+router.get("/", auth, async (req, res) => {
+  try {
+    const expenses = await Expense.find({ user: req.user.id });
+    res.json(expenses);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// GET A SINGLE USER EXPENSE
+router.get("/:id", auth, async (req, res) => {
+  try {
+    const expense = await Expense.findById(req.params.id);
+
+    if (!expense) {
+      return res.status(404).json({ msg: "Expense not found" });
+    }
+
+    res.json(expense);
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind === "ObjectId") {
+      return res.status(404).json({ msg: "Expense not found" });
+    }
+
+    res.status(500).send("Server Error");
+  }
+});
+
+// DELETE A USER EXPENSE
+router.delete("/:id", auth, async (req, res) => {
+  try {
+    const expense = await Expense.findById(req.params.id);
+
+    if (!expense) {
+      return res.status(404).json({ msg: "Expense not found" });
+    }
+
+    if (expense.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: "User not authorized" });
+    }
+
+    await expense.remove();
+
+    res.json({ msg: "Expense deleted" });
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind === "ObjectId") {
+      return res.status(404).json({ msg: "Expense not found" });
+    }
+    res.status(500).send("Server Error");
+  }
+});
 
 module.exports = router;
