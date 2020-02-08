@@ -1,26 +1,25 @@
 {
-  "name": "expense_tracker",
+  "name": "expense_tracker2",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "engines": {
-    "node": "8.11.1",
-    "npm": "6.10.2"
-  },
+  "main": "server.js",
   "scripts": {
     "start": "node server",
     "server": "nodemon server"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Robert Kramer",
+  "license": "MIT",
   "dependencies": {
-    "config": "^3.2.4",
+    "bcryptjs": "^2.4.3",
+    "config": "^3.2.5",
     "express": "^4.17.1",
-    "mongoose": "^5.8.1"
+    "express-validator": "^6.3.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.8.10",
+    "request": "^2.88.0"
   },
   "devDependencies": {
-    "concurrently": "^5.0.1",
+    "concurrently": "^5.1.0",
     "nodemon": "^2.0.2"
   }
 }
