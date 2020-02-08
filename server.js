@@ -11,6 +11,7 @@ app.use(express.json({ extended: false }));  // replaces bodyparser, allows us t
 
 
 app.use("/api/users", require("./routes/api/users"));
+app.use("/api/auth", require("./routes/api/auth"));
 
 app.get("/", (req, res) => {
   res.send("Hello World");

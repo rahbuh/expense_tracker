@@ -54,8 +54,7 @@ router.post(
           res.json({ token });
         }
       );
-
-      // res.send("User Registered"); // remove after test
+      
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server Error");
