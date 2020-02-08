@@ -7,7 +7,7 @@ const app = express();
 connectDB();
 
 // Init Middleware
-app.use(express.json({ extended: false }));  // allows us to get req.body data
+app.use(express.json({ extended: false }));  // replaces bodyparser, allows us to get req.body data
 
 
 app.use("/api/users", require("./routes/api/users"));
