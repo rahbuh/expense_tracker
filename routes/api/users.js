@@ -1,13 +1,15 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const config = require("config");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
 
 const User = require("../../models/User");
 
+// USER REGISTRATION
 router.post(
   "/",
-  // define input checks
   [
     check("name", "Name is required")
       .not()
@@ -17,21 +19,16 @@ router.post(
       .isString()
       .isLength({ min: 6 })
   ],
-
   async (req, res) => {
-    // console.log(req.body);
-    // req.body requires app.use(express.json()) in server.js
-
-    //check for errors
-    const errors = validationResult(req);
+    const errors = validationResult(req); //check for errors
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
 
-    const { name, email, password } = req.body;
+    const { name, email, password } = req.body; //get input from header
 
     try {
-      let user = await User.findOne({ email });
+      let user = await User.findOne({ email }); //check db if user already exists
 
       if (user) {
         return res
@@ -39,14 +36,26 @@ router.post(
           .json({ errors: [{ msg: "User already exists" }] });
       }
 
-      user = new User({ name, email, password });
+      user = new User({ name, email, password }); //create new user instance
 
       const salt = await bcrypt.genSalt(10);
-      user.password = await bcrypt.hash(password, salt);
+      user.password = await bcrypt.hash(password, salt); //encrypt password
 
-      await user.save();
+      await user.save(); //save user to db
 
-      res.send("User Registered");
+      const payload = {
+        user: {
+          id: user.id
+        }
+      };
+
+      jwt.sign( payload, config.get("jwtSecret"), { expiresIn: 3600 }, (err, token) => {
+          if (err) throw err;
+          res.json({ token });
+        }
+      );
+
+      // res.send("User Registered"); // remove after test
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server Error");
