@@ -1,5 +1,0 @@
-{
-    "jwtSecret": "AQc$2tJVZ88WfH@Z",
-    "mongoURI.bak":"mongodb+srv://rnkAdmin:f3JT3Q9bIwuLpMJL@devconnector-kjj1n.mongodb.net/tracker?retryWrites=true&w=majority",
-    "mongoURI": "mongodb://rnkAdmin:f3JT3Q9bIwuLpMJL@devconnector-shard-00-00-kjj1n.mongodb.net:27017,devconnector-shard-00-01-kjj1n.mongodb.net:27017,devconnector-shard-00-02-kjj1n.mongodb.net:27017/expense-tracker?ssl=true&replicaSet=devConnector-shard-0&authSource=admin&retryWrites=true&w=majority"
-}
