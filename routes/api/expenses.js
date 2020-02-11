@@ -6,6 +6,37 @@ const auth = require("../../middleware/auth");
 const User = require("../../models/User");
 const Expense = require("../../models/Expense");
 
+// GET ALL EXPENSES FOR USER
+router.get("/", auth, async (req, res) => {
+  try {
+    const expenses = await Expense.find({ user: req.user.id });
+    res.json(expenses);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// GET A SINGLE USER EXPENSE
+router.get("/:id", auth, async (req, res) => {
+  try {
+    const expense = await Expense.findById(req.params.id);
+
+    if (!expense) {
+      return res.status(404).json({ msg: "Expense not found" });
+    }
+
+    res.json(expense);
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind === "ObjectId") {
+      return res.status(404).json({ msg: "Expense not found" });
+    }
+
+    res.status(500).send("Server Error");
+  }
+});
+
 // ADD AN EXPENSE
 router.post(
   "/",
@@ -58,37 +89,6 @@ router.post(
   }
 );
 
-// GET ALL EXPENSES FOR USER
-router.get("/", auth, async (req, res) => {
-  try {
-    const expenses = await Expense.find({ user: req.user.id });
-    res.json(expenses);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error");
-  }
-});
-
-// GET A SINGLE USER EXPENSE
-router.get("/:id", auth, async (req, res) => {
-  try {
-    const expense = await Expense.findById(req.params.id);
-
-    if (!expense) {
-      return res.status(404).json({ msg: "Expense not found" });
-    }
-
-    res.json(expense);
-  } catch (err) {
-    console.error(err.message);
-    if (err.kind === "ObjectId") {
-      return res.status(404).json({ msg: "Expense not found" });
-    }
-
-    res.status(500).send("Server Error");
-  }
-});
-
 // DELETE A USER EXPENSE
 router.delete("/:id", auth, async (req, res) => {
   try {
@@ -105,6 +105,40 @@ router.delete("/:id", auth, async (req, res) => {
     await expense.remove();
 
     res.json({ msg: "Expense deleted" });
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind === "ObjectId") {
+      return res.status(404).json({ msg: "Expense not found" });
+    }
+    res.status(500).send("Server Error");
+  }
+});
+
+// UPDATE A USER EXPENSE
+router.put("/:id", auth, async (req, res) => {
+  try {
+    const expense = await Expense.findById(req.params.id);
+
+    if (!expense) {
+      return res.status(404).json({ msg: "Expense not found" });
+    }
+
+    if (expense.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: "User not authorized" });
+    }
+    
+    const update = {
+      name: req.body.name,
+      date: req.body.date,
+      amount: req.body.amount,
+      method: req.body.method,
+      category: req.body.category,
+      memo: req.body.memo
+    };
+    
+    await expense.updateOne(update);
+
+    res.json({ msg: "Expense updated" });
   } catch (err) {
     console.error(err.message);
     if (err.kind === "ObjectId") {
