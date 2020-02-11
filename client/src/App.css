@@ -1,1 +1,85 @@
+* {
+  margin: 0;
+  padding: 0;
+}
 
+body {
+  font-family: "Montserrat", sans-serif;
+  background: url(assets/img/splash.jpg) #f1fffa no-repeat;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #284016;
+  height: 40px;
+  padding: 8px 20px;
+  color: #fff;
+  opacity: 0.9;
+}
+
+.menu {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+#main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+}
+
+.headline {
+  background-color: rgb(245, 245, 245);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
+  font-family: "Merienda", cursive;
+  font-size: 1.25rem;
+  text-align: center;
+  color: #284016;
+  padding: 2rem;
+  margin: 2%;
+}
+
+.headline > p {
+  margin-bottom: 1rem;
+}
+
+.btn {
+  border: 0;
+  border-radius: 3px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.btn-register,
+.btn-login {
+  background-color: #79bf43;
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
+  text-shadow: 1px 1px 2px #444;
+  color: #fff;
+  width: 200px;
+  padding: 12px 0 10px;
+  margin: 20px 10px;
+}
+
+.btn:hover {
+  background-color: #ff7f50;
+  color: #fff;
+}
+
+.is-blurred {
+  filter: blur(2px);
+  -webkit-filter: blur(2px);
+}
