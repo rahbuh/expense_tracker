@@ -5,13 +5,13 @@
 
 body {
   font-family: "Montserrat", sans-serif;
-  background: url(assets/img/splash.jpg) #f1fffa no-repeat;
+  background: url('./assets/img/splash.jpg') #f1fffa no-repeat;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
 }
 
-header {
+.navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
