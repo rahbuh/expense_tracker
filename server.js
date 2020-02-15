@@ -3,11 +3,10 @@ const connectDB = require("./config/db");
 
 const app = express();
 
-// Connect Database
 connectDB();
 
 // Init Middleware
-app.use(express.json({ extended: false }));  // replaces bodyparser, allows us to get req.body data
+app.use(express.json({ extended: false })); 
 
 app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/expenses", require("./routes/api/expenses"));
