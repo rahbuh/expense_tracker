@@ -35,7 +35,7 @@ class Login extends Component {
         const { token, errors } = response;
         if (token) {
           this.setState({ token });
-          this.props.history.push("/expenses")
+          this.props.history.push("/user/expenses")
         }
         if (errors) {
           this.setState({ successMsg: "", errors });

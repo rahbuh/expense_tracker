@@ -1,11 +1,11 @@
 import React from 'react'
 
-function Dashboard() {
+function Expenses() {
     return (
         <h1>
-            Welcome to the Dashboard
+            Welcome to Expenses
         </h1>
     )
 }
 
-export default Dashboard
+export default Expenses
