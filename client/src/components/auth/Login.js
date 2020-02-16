@@ -35,7 +35,7 @@ class Login extends Component {
         </p>
         {errors}
         {success ? <Success msg={success.msg} /> : null}
-        <form className="form" action="dashboard.html">
+        <form className="form" action="dashboard.html" noValidate>
           <div className="form-group">
             <input
               type="email"
