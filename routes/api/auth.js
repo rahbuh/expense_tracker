@@ -22,17 +22,14 @@ router.get("/", auth, async (req, res) => {
 // USER LOGIN
 router.post(
   "/",
-  [
-    check("email", "Please include a valid email").isEmail(),
-    check("password", "Password is required").exists()
-  ],
+  [check("email", "Please include a valid email").isEmail()],
   async (req, res) => {
-    const errors = validationResult(req); //check for errors
+    const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
 
-    const { email, password } = req.body; //get input from header
+    const { email, password } = req.body;
 
     try {
       let user = await User.findOne({ email });
@@ -51,6 +48,8 @@ router.post(
           .json({ errors: [{ msg: "Invalid Credentials" }] });
       }
 
+      res.json({ token: "Fake token" });
+
       const payload = {
         user: {
           id: user.id
@@ -67,7 +66,7 @@ router.post(
         }
       );
     } catch (err) {
-      // console.error(err.message);
+      console.error(err.message);
       res.status(500).send("Server Error");
     }
   }
