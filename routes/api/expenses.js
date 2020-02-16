@@ -2,12 +2,13 @@ const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
 
-const auth = require("../../middleware/auth");
+const auth = require("../../middleware/check-auth");
 const User = require("../../models/User");
 const Expense = require("../../models/Expense");
 
 // GET ALL EXPENSES FOR USER
 router.get("/", auth, async (req, res) => {
+  console.log(req.body)
   try {
     const expenses = await Expense.find({ user: req.user.id });
     res.json(expenses);

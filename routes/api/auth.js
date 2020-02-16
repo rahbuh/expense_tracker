@@ -5,11 +5,11 @@ const config = require("config");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
 
-const auth = require("../../middleware/auth");
+const checkAuth = require("../../middleware/check-auth");
 const User = require("../../models/User");
 
 // USER VALIDATION
-router.get("/", auth, async (req, res) => {
+router.get("/", checkAuth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
     res.json(user);
