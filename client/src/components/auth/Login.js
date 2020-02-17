@@ -1,8 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import authenticate from "../../api/authUser";
-import Errors from "./Errors";
-import Success from "./Success";
+import Alert from "./Alert";
 
 class Login extends Component {
   state = {
@@ -47,8 +46,8 @@ class Login extends Component {
   };
 
   render() {
-    const errors = this.state.errors.map(err => (
-      <Errors key={err.msg} error={err.msg} />
+    const errors = this.state.errors.map((err, index) => (
+      <Alert key={index} className={"alert alert-danger"} message={err.msg} />
     ));
     const success = this.state.successMsg;
 
@@ -59,7 +58,7 @@ class Login extends Component {
           <i className="fas fa-user"></i> Sign into Your Account
         </p>
         {errors}
-        {success ? <Success msg={success.msg} /> : null}
+        {success ? <Alert className={"alert alert-success"} message={success.msg} /> : null}
         <form className="form" onSubmit={this.handleSubmit} noValidate>
           <div className="form-group">
             <input

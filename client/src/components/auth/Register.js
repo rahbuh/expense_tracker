@@ -1,12 +1,12 @@
 import React, { Component, Fragment } from "react";
 import { Link, Redirect } from "react-router-dom";
 import register from "../../api/registerUser";
-import Errors from "./Errors";
+import Alert from "./Alert";
 
 class Register extends Component {
   state = {
     newUser: {
-      name: "",
+      username: "",
       email: "",
       password: "",
       password2: ""
@@ -16,18 +16,18 @@ class Register extends Component {
   };
 
   handleChange = e => {
-    this.setState(prevState => ({
-      newUser: { ...prevState.newUser, [e.target.name]: e.target.value }
-    }));
+    const userData = this.state.newUser;
+    userData[e.target.name] = e.target.value;
+    this.setState(userData);
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    const { name, email, password, password2 } = this.state.newUser;
+    const { username, email, password, password2 } = this.state.newUser;
 
-    if (name && email && password && password2) {
+    if (username && email && password && password2) {
       if (password === password2) {
-        register(name, email, password).then(response => {
+        register(username, email, password).then(response => {
           const { success, errors } = response;
 
           if (success) {
@@ -46,8 +46,8 @@ class Register extends Component {
   };
 
   render() {
-    const errors = this.state.errors.map(err => (
-      <Errors key={err.msg} error={err.msg} />
+    const errors = this.state.errors.map((err, index) => (
+      <Alert key={index} className={"alert alert-danger"} message={err.msg} />
     ));
 
     if (this.state.success) {
@@ -61,6 +61,8 @@ class Register extends Component {
       );
     }
 
+    const { username, email, password, password2 } = this.state.newUser;
+
     return (
       <Fragment>
         <h1 className="large text-golden">Sign Up</h1>
@@ -73,8 +75,8 @@ class Register extends Component {
             <input
               type="text"
               placeholder="Name"
-              name="name"
-              value={this.state.name}
+              name="username"
+              value={username}
               onChange={this.handleChange}
               autoComplete="on"
             />
@@ -84,7 +86,7 @@ class Register extends Component {
               type="email"
               placeholder="Email Address"
               name="email"
-              value={this.state.email}
+              value={email}
               onChange={this.handleChange}
               autoComplete="on"
             />
@@ -94,7 +96,7 @@ class Register extends Component {
               type="password"
               placeholder="Password"
               name="password"
-              value={this.state.password}
+              value={password}
               onChange={this.handleChange}
               autoComplete="off"
             />
@@ -104,7 +106,7 @@ class Register extends Component {
               type="password"
               placeholder="Confirm Password"
               name="password2"
-              value={this.state.password2}
+              value={password2}
               onChange={this.handleChange}
               autoComplete="off"
             />
