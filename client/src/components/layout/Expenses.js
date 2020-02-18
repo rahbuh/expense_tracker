@@ -1,70 +1,27 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { ExpenseCard } from "./ExpenseCard";
 import { Button } from "./Button";
+
+import { list } from "../../helpers/mockExpenseData";
 
 // import { Modal } from "./Modal";
 
 function Expenses() {
-  const list = [
-    {
-      id: "12345",
-      date: "12/31/2020",
-      payee: " Some big long store name",
-      amount: "53.12",
-      type: "Card",
-      category: "Groceries",
-      memo: ""
-    },
-    {
-      id: "24567",
-      date: "2/5/2020",
-      payee: "Trader Joe's",
-      amount: "35.10",
-      type: "Card",
-      category: "Groceries",
-      memo: ""
-    },
-    {
-      id: "36958",
-      date: "2/12/2020",
-      payee: "Starbucks",
-      amount: "10.00",
-      type: "Cash",
-      category: "Food & Beverage",
-      memo: "reloaded card"
-    },
-    {
-      id: "11234",
-      date: "12/31/2020",
-      payee: " Some big long store name",
-      amount: "53.12",
-      type: "Card",
-      category: "Groceries",
-      memo: ""
-    },
-    {
-      id: "24577",
-      date: "2/5/2020",
-      payee: "Trader Joe's",
-      amount: "35.10",
-      type: "Card",
-      category: "Groceries",
-      memo: ""
-    },
-    {
-      id: "36918",
-      date: "2/12/2020",
-      payee: "Starbucks",
-      amount: "10.00",
-      type: "Cash",
-      category: "Food & Beverage",
-      memo: "reloaded card"
-    }
-  ];
+  const [userExpenses, getExpenses] = useState([]);
 
-  const expenseList = list.map(expense => {
+  useEffect(() => {
+    getExpenses(() => {
+      return list.map(expense => ({ ...expense }));
+    });
+  }, []);
+
+  const expenseList = userExpenses.map(expense => {
     return <ExpenseCard key={expense.id} data={expense} />;
   });
+
+  const addExpense = () => {
+    console.log("button clicked");
+  };
 
   return (
     <Fragment>
@@ -75,9 +32,16 @@ function Expenses() {
             id="add-expense"
             className="btn btn-standard"
             btnName="Add Expense"
+            onClick={addExpense}
           />
         </div>
-        <div id="expense-list">{expenseList.length ? expenseList : <h3>You haven't entered any expenses...</h3>}</div>
+        <div id="expense-list">
+          {expenseList.length ? (
+            expenseList
+          ) : (
+            <h3>You haven't entered any expenses...</h3>
+          )}
+        </div>
         <div className="py-1">
           {/* <button id="edit-expense" className="btn btn-standard">
             Edit
