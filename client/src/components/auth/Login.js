@@ -1,7 +1,7 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import authenticate from "../../api/authUser";
-import Alert from "./Alert";
+import { Alert } from "./Alert";
 
 class Login extends Component {
   state = {
@@ -34,37 +34,43 @@ class Login extends Component {
         const { token, errors } = response;
         if (token) {
           this.setState({ token });
-          this.props.history.push("/user/expenses")
+          this.props.history.push("/user/expenses");
         }
         if (errors) {
           this.setState({ successMsg: "", errors });
         }
       });
     } else {
-      this.setState({ successMsg: "", errors: [{ msg: "All fields are required" }] });
+      this.setState({
+        successMsg: "",
+        errors: [{ msg: "All fields are required" }]
+      });
     }
   };
 
   render() {
-    const errors = this.state.errors.map((err, index) => (
+    const { email, password, errors, successMsg: success } = this.state;
+    const errorMsg = errors.map((err, index) => (
       <Alert key={index} className={"alert alert-danger"} message={err.msg} />
     ));
-    const success = this.state.successMsg;
 
     return (
-      <Fragment>
+      <div className="wrapper">
         <h1 className="large text-golden">Sign In</h1>
         <p className="lead">
           <i className="fas fa-user"></i> Sign into Your Account
         </p>
-        {errors}
-        {success ? <Alert className={"alert alert-success"} message={success.msg} /> : null}
+        {errorMsg}
+        {success ? (
+          <Alert className={"alert alert-success"} message={success.msg} />
+        ) : null}
         <form className="form" onSubmit={this.handleSubmit} noValidate>
           <div className="form-group">
             <input
               type="email"
               placeholder="Email Address"
               name="email"
+              value={email}
               onChange={this.handleChange}
               autoComplete="on"
             />
@@ -74,6 +80,7 @@ class Login extends Component {
               type="password"
               placeholder="Password"
               name="password"
+              value={password}
               onChange={this.handleChange}
               autoComplete="off"
             />
@@ -83,7 +90,7 @@ class Login extends Component {
         <p className="my-1">
           Don't have an account? <Link to="/register">Sign Up</Link>
         </p>
-      </Fragment>
+      </div>
     );
   }
 }

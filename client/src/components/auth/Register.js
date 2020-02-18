@@ -1,7 +1,7 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import register from "../../api/registerUser";
-import Alert from "./Alert";
+import { Alert } from "./Alert";
 
 class Register extends Component {
   state = {
@@ -46,7 +46,8 @@ class Register extends Component {
   };
 
   render() {
-    const errors = this.state.errors.map((err, index) => (
+    const { username, email, password, password2 } = this.state.newUser;
+    const errorMsg = this.state.errors.map((err, index) => (
       <Alert key={index} className={"alert alert-danger"} message={err.msg} />
     ));
 
@@ -61,15 +62,13 @@ class Register extends Component {
       );
     }
 
-    const { username, email, password, password2 } = this.state.newUser;
-
     return (
-      <Fragment>
+      <div className="wrapper">
         <h1 className="large text-golden">Sign Up</h1>
         <p className="lead">
           <i className="fas fa-user"></i> Create Your Account
         </p>
-        {errors}
+        {errorMsg}
         <form className="form" onSubmit={this.handleSubmit} noValidate>
           <div className="form-group">
             <input
@@ -116,7 +115,7 @@ class Register extends Component {
         <p className="my-1">
           Already have an account? <Link to="/login">Sign In</Link>
         </p>
-      </Fragment>
+      </div>
     );
   }
 }
