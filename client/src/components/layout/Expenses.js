@@ -34,7 +34,7 @@ function Expenses() {
       memo: "reloaded card"
     },
     {
-      id: "12345",
+      id: "11234",
       date: "12/31/2020",
       payee: " Some big long store name",
       amount: "53.12",
@@ -43,7 +43,7 @@ function Expenses() {
       memo: ""
     },
     {
-      id: "24567",
+      id: "24577",
       date: "2/5/2020",
       payee: "Trader Joe's",
       amount: "35.10",
@@ -52,7 +52,7 @@ function Expenses() {
       memo: ""
     },
     {
-      id: "36958",
+      id: "36918",
       date: "2/12/2020",
       payee: "Starbucks",
       amount: "10.00",

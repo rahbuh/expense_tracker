@@ -16,9 +16,12 @@ class Register extends Component {
   };
 
   handleChange = e => {
-    const userData = this.state.newUser;
-    userData[e.target.name] = e.target.value;
-    this.setState(userData);
+    const name = e.target.name;
+    const value = e.target.value;
+
+    this.setState(prevState => ({
+      newUser: { ...prevState.newUser, [name]: value }
+    }));
   };
 
   handleSubmit = e => {
