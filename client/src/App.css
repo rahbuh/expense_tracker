@@ -429,7 +429,6 @@ button {
 /* Modal */
 .modal {
   background-color: rgba(0, 0, 0, 0.5);
-  /* display: none; */
   position: fixed;
   z-index: 1;
   left: 0;

@@ -13,12 +13,16 @@ export const ExpenseCard = props => {
       </div>
       <div className="row row-secondary">
         <ExpenseField className={"type"} title={"Payment: "} data={type} />
-        <ExpenseField className={"category"} title={"Category: "} data={category} />
+        <ExpenseField
+          className={"category"}
+          title={"Category: "}
+          data={category}
+        />
         <ExpenseField className={"memo"} title={"Memo: "} data={memo} />
       </div>
       <div className="row row-icons">
-            <i className="fas fa-edit"></i>
-            <i className="far fa-trash-alt"></i>
+        <i className="fas fa-edit"></i>
+        <i className="far fa-trash-alt"></i>
       </div>
     </div>
   );
