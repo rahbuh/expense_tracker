@@ -27,6 +27,10 @@ function Expenses() {
   // - -- close modal (set showModal to false)
   // }
 
+  const closeModal = () => {
+    setShowModal(false)
+  }
+
   const expenseList = userExpenses.map(expense => {
     return <ExpenseCard key={expense.id} data={expense} />;
   });
@@ -51,7 +55,7 @@ function Expenses() {
           )}
         </div>
       </div>
-      {showModal ? <Modal title={"Add Expense"} /> : null}
+      {showModal ? <Modal title={"Add Expense"} close={closeModal}/> : null}
     </Fragment>
   );
 }
