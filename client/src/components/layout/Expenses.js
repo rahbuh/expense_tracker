@@ -7,21 +7,24 @@ import { list } from "../../helpers/mockExpenseData";
 // import { Modal } from "./Modal";
 
 function Expenses() {
-  const [userExpenses, getExpenses] = useState([]);
+  const [userExpenses, setExpenses] = useState([]);
 
   useEffect(() => {
-    getExpenses(() => {
-      return list.map(expense => ({ ...expense }));
-    });
+    getExpenses()
   }, []);
+
+  const getExpenses = () => {
+    setExpenses(list.map(expense => ({ ...expense })));
+  };
+
+  const addExpense = () => {
+    console.log("button clicked");
+  };
 
   const expenseList = userExpenses.map(expense => {
     return <ExpenseCard key={expense.id} data={expense} />;
   });
 
-  const addExpense = () => {
-    console.log("button clicked");
-  };
 
   return (
     <Fragment>
