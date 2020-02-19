@@ -5,7 +5,7 @@ export const ExpenseCard = props => {
   const { date, payee, amount, type, category, memo } = props.data;
 
   return (
-    <div className="expense-card">
+    <div className="card">
       <div className="row row-primary">
         <ExpenseField className={"date"} title={"Date: "} data={date} />
         <ExpenseField className={"amount"} title={"Amount: "} data={amount} />

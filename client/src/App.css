@@ -329,13 +329,22 @@ button {
 }
 
 /* Expense Card */
-.expense-card {
+.card {
   border: 1px solid #e6e6e6;
-  box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2), 0 4px 10px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
   max-width: 1200px;
   font-size: 1rem;
   margin: 0.5rem 0;
   padding: 0.5rem;
+}
+
+.card:nth-child(even) {
+  background-color: rgb(253, 203, 104, .5);
+}
+
+.card:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
 .row {
@@ -350,9 +359,7 @@ button {
   /* display: none; */
 }
 
-.expense-card:nth-child(even) {
-  background-color: rgb(253, 203, 104, .5);
-}
+
 
 .expense-title {
   font-weight: bold;
@@ -502,8 +509,6 @@ select::-moz-focus-inner {
 /* Mobile Styles */
 @media (max-width: 700px) {
   .container {
-    /* margin-top: 8rem; */
-    margin: 8rem 0 3rem;
     padding: 0 0.5rem;
   }
 
