@@ -10,7 +10,7 @@ function Expenses() {
   const [userExpenses, setExpenses] = useState([]);
 
   useEffect(() => {
-    getExpenses()
+    getExpenses();
   }, []);
 
   const getExpenses = () => {
@@ -24,7 +24,6 @@ function Expenses() {
   const expenseList = userExpenses.map(expense => {
     return <ExpenseCard key={expense.id} data={expense} />;
   });
-
 
   return (
     <Fragment>
@@ -44,11 +43,6 @@ function Expenses() {
           ) : (
             <h3>You haven't entered any expenses...</h3>
           )}
-        </div>
-        <div className="py-1">
-          {/* <button id="edit-expense" className="btn btn-standard">
-            Edit
-          </button> */}
         </div>
       </div>
       {/* <Modal title={"Add Expense"} /> */}
