@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { Input, Select } from "./InputFields";
 import { Button } from "./Button";
 
+import postExpense from "../../api/userExpense";
+
 export const Modal = props => {
   // these will be updated  via API call to users saved lists
   const methods = ["Cash", "Credit Card", "Debit Card", "Paypal", "Apple Pay"];
-
   const categories = ["Groceries", "Gas", "Dining Out", "Clothes", "Misc"];
 
   const [inputData, setInputData] = useState({
@@ -18,20 +19,22 @@ export const Modal = props => {
   });
 
   const handleChange = e => {
-    console.log(e.target.name, e.target.value);
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
 
   const saveExpense = e => {
     e.preventDefault();
+    postExpense(inputData).then(response => {
+      console.log(response);
+    });
     // get input from modal fields
     // validate user
     // - if not valid - redirect to login page
     // - else
     // - -- post input to /user/expenses
     // - -- update state with expense
-    // - -- close modal (set showModal to false)
-    console.log(inputData);
+    // - -- close modal
+    props.close();
   };
 
   return (

@@ -48,8 +48,6 @@ router.post(
           .json({ errors: [{ msg: "Invalid Credentials" }] });
       }
 
-      res.json({ token: "Fake token" });
-
       const payload = {
         user: {
           id: user.id

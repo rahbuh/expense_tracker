@@ -8,7 +8,7 @@ import { list } from "../../helpers/mockExpenseData";
 function Expenses() {
   const [userExpenses, setExpenses] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  
+
   useEffect(() => {
     getExpenses();
   }, []);
@@ -18,8 +18,8 @@ function Expenses() {
   };
 
   const closeModal = () => {
-    setShowModal(false)
-  }
+    setShowModal(false);
+  };
 
   const expenseList = userExpenses.map(expense => {
     return <ExpenseCard key={expense.id} data={expense} />;
@@ -28,24 +28,26 @@ function Expenses() {
   return (
     <Fragment>
       <div id="main" className={showModal ? "is-blurred" : ""}>
-        <div className="list-header">
+        <div className="content">
+          <div className="list-header">
           <p className="medium bold text-golden">Expense List</p>
-          <Button
-            id="add-expense"
-            className="btn btn-standard"
-            btnName="Add Expense"
-            action={() => setShowModal(true)}
-          />
-        </div>
-        <div id="expense-list">
-          {expenseList.length ? (
-            expenseList
-          ) : (
-            <h3>You haven't entered any expenses...</h3>
-          )}
+            <Button
+              id="add-expense"
+              className="btn btn-standard"
+              btnName="Add Expense"
+              action={() => setShowModal(true)}
+            />
+          </div>
+          <div id="expense-list">
+            {expenseList.length ? (
+              expenseList
+            ) : (
+              <h3>You haven't entered any expenses...</h3>
+            )}
+          </div>
         </div>
       </div>
-      {showModal ? <Modal title={"Add Expense"} close={closeModal}/> : null}
+      {showModal ? <Modal title={"Add Expense"} close={closeModal} /> : null}
     </Fragment>
   );
 }

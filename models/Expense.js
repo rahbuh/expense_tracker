@@ -6,7 +6,7 @@ const ExpenseSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "users"
   },
-  name: {
+  payee: {
     type: String,
     required: true
   },

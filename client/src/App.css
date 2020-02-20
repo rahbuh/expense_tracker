@@ -44,17 +44,23 @@ ul {
 .container {
   min-width: 350px;
   margin: 0 auto;
-  margin-top: 6rem;
+  margin-top: 5rem;
   margin-bottom: 3rem;
   padding: 0 2rem;
   overflow: hidden;
 }
 
+/* register and login */
 .wrapper {
   max-width: 600px;
   margin: 0 auto;
   padding: 1rem;
 }
+
+/* user expenses */
+/* .content {
+  border: 1px solid blue;
+} */
 
 /* Text Styles*/
 .x-large {
@@ -313,6 +319,12 @@ button {
 }
 
 /* Expenses Page */
+#main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .list-header {
   display: grid;
   grid-template-columns: repeat(2, 200px);
@@ -322,11 +334,6 @@ button {
   margin: 1rem 0;
 }
 
-#main {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
 
 /* Expense Card */
 .card {
@@ -502,6 +509,7 @@ select::-moz-focus-inner {
 /* Mobile Styles */
 @media (max-width: 700px) {
   .container {
+    margin: 6rem 0;
     padding: 0 0.5rem;
   }
 

@@ -2,12 +2,12 @@ const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
 
-const auth = require("../../middleware/check-auth");
+const checkAuth = require("../../middleware/check-auth");
 const User = require("../../models/User");
 const Expense = require("../../models/Expense");
 
 // GET ALL EXPENSES FOR USER
-router.get("/", auth, async (req, res) => {
+router.get("/", checkAuth, async (req, res) => {
   console.log(req.body)
   try {
     const expenses = await Expense.find({ user: req.user.id });
@@ -19,7 +19,7 @@ router.get("/", auth, async (req, res) => {
 });
 
 // GET A SINGLE USER EXPENSE
-router.get("/:id", auth, async (req, res) => {
+router.get("/:id", checkAuth, async (req, res) => {
   try {
     const expense = await Expense.findById(req.params.id);
 
@@ -42,9 +42,9 @@ router.get("/:id", auth, async (req, res) => {
 router.post(
   "/",
   [
-    auth,
+    checkAuth,
     [
-      check("name", "Expense name is required")
+      check("payee", "Payee is required")
         .not()
         .isEmpty(),
       check("date", "Date is required")
@@ -71,7 +71,7 @@ router.post(
       const user = await User.findById(req.user.id).select("-password");
 
       const newExpense = new Expense({
-        name: req.body.name,
+        payee: req.body.payee,
         date: req.body.date,
         amount: req.body.amount,
         method: req.body.method,
@@ -91,7 +91,7 @@ router.post(
 );
 
 // DELETE A USER EXPENSE
-router.delete("/:id", auth, async (req, res) => {
+router.delete("/:id", checkAuth, async (req, res) => {
   try {
     const expense = await Expense.findById(req.params.id);
 
@@ -116,7 +116,7 @@ router.delete("/:id", auth, async (req, res) => {
 });
 
 // UPDATE A USER EXPENSE
-router.put("/:id", auth, async (req, res) => {
+router.put("/:id", checkAuth, async (req, res) => {
   try {
     const expense = await Expense.findById(req.params.id);
 
