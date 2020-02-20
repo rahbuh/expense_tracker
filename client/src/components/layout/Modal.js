@@ -1,17 +1,37 @@
 import React, { useState } from "react";
-import { InputField, SelectField } from "./InputField";
+import { Input, Select } from "./InputFields";
 import { Button } from "./Button";
 
 export const Modal = props => {
-  // these will be updated via API call to users saved lists
+  // these will be updated  via API call to users saved lists
   const methods = ["Cash", "Credit Card", "Debit Card", "Paypal", "Apple Pay"];
+
   const categories = ["Groceries", "Gas", "Dining Out", "Clothes", "Misc"];
 
-  const [inputData, setInputData] = useState({ payee: "", amount: null });
+  const [inputData, setInputData] = useState({
+    payee: "",
+    date: "",
+    amount: "",
+    method: "",
+    category: "",
+    memo: ""
+  });
+
+  const handleChange = e => {
+    console.log(e.target.name, e.target.value);
+    setInputData({ ...inputData, [e.target.name]: e.target.value });
+  };
 
   const saveExpense = e => {
     e.preventDefault();
-    console.log("button clicked");
+    // get input from modal fields
+    // validate user
+    // - if not valid - redirect to login page
+    // - else
+    // - -- post input to /user/expenses
+    // - -- update state with expense
+    // - -- close modal (set showModal to false)
+    console.log(inputData);
   };
 
   return (
@@ -26,35 +46,47 @@ export const Modal = props => {
         </div>
         <div className="modal-body">
           <form id="expense-form">
-            <InputField
+            <Input
               type="text"
               title="Payee"
               name="payee"
               placeholder="who was the payment to?"
+              onChange={handleChange}
             />
-            <InputField type="date" title="Date" name="trans-date" />
-            <InputField
+            <Input
+              type="date"
+              title="Date"
+              name="date"
+              onChange={handleChange}
+            />
+            <Input
               type="number"
               title="Amount"
               name="amount"
               placeholder="0.00"
               step="0.01"
+              onChange={handleChange}
             />
-            <SelectField
+            <Select
               title="Payment Method"
-              name="pay-method"
+              name="method"
               options={[...methods]}
+              value={inputData.method}
+              onChange={handleChange}
             />
-            <SelectField
+            <Select
               title="Category"
               name="category"
               options={[...categories]}
+              value={inputData.category}
+              onChange={handleChange}
             />
-            <InputField
+            <Input
               type="text"
               title="Memo"
               name="memo"
               placeholder="anything to note?"
+              onChange={handleChange}
             />
             <Button
               id="save-expense"

@@ -8,7 +8,7 @@ import { list } from "../../helpers/mockExpenseData";
 function Expenses() {
   const [userExpenses, setExpenses] = useState([]);
   const [showModal, setShowModal] = useState(false);
-
+  
   useEffect(() => {
     getExpenses();
   }, []);
@@ -16,16 +16,6 @@ function Expenses() {
   const getExpenses = () => {
     setExpenses(list.map(expense => ({ ...expense })));
   };
-
-  // const saveExpense = () => {
-  // get input from modal fields
-  // validate user
-  // - if not valid - redirect to login page
-  // - else
-  // - -- post input to /user/expenses
-  // - -- update state with expense
-  // - -- close modal (set showModal to false)
-  // }
 
   const closeModal = () => {
     setShowModal(false)
