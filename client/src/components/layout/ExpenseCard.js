@@ -21,8 +21,8 @@ export const ExpenseCard = props => {
         <ExpenseField className={"memo"} title={"Memo: "} data={memo} />
       </div>
       <div className="row row-icons">
-        <i className="fas fa-edit"></i>
-        <i className="far fa-trash-alt"></i>
+        <i id="edit-expense" className="fas fa-edit"></i>
+        <i id="delete-expense" className="far fa-trash-alt"></i>
       </div>
     </div>
   );

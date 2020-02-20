@@ -44,7 +44,7 @@ function Expenses() {
             id="add-expense"
             className="btn btn-standard"
             btnName="Add Expense"
-            onClick={() => setShowModal(true)}
+            action={() => setShowModal(true)}
           />
         </div>
         <div id="expense-list">
