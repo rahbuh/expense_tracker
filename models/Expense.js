@@ -20,11 +20,9 @@ const ExpenseSchema = new Schema({
   },
   method: {
     type: String,
-    required: true
   },
   category: {
     type: String,
-    required: true
   },
   memo: {
     type: String

@@ -1,13 +1,19 @@
 import React from "react";
 import { ExpenseField } from "./ExpenseField";
+import moment from "moment";
 
 export const ExpenseCard = props => {
   const { date, payee, amount, type, category, memo } = props.data;
+  const dateFormatted = moment(date).format("MM/DD/YYYY");
 
   return (
     <div className="card">
       <div className="row row-primary">
-        <ExpenseField className={"date"} title={"Date: "} data={date} />
+        <ExpenseField
+          className={"date"}
+          title={"Date: "}
+          data={dateFormatted}
+        />
         <ExpenseField className={"amount"} title={"Amount: "} data={amount} />
         <ExpenseField className={"payee"} title={"Payee: "} data={payee} />
       </div>

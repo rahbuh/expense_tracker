@@ -8,13 +8,12 @@ const Expense = require("../../models/Expense");
 
 // GET ALL EXPENSES FOR USER
 router.get("/", checkAuth, async (req, res) => {
-  console.log(req.body)
   try {
     const expenses = await Expense.find({ user: req.user.id });
     res.json(expenses);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).json({ errors: [{ msg: "Server Error" }] });
   }
 });
 
@@ -56,18 +55,18 @@ router.post(
     ]
   ],
   async (req, res) => {
-    const errors = validationResult(req); //check for errors
+    const errors = validationResult(req); //check for input errors
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
     try {
       const user = await User.findById(req.user.id).select("-password");
-
+      const amount = String(parseFloat(req.body.amount).toFixed(2))
       const newExpense = new Expense({
         payee: req.body.payee,
         date: req.body.date,
-        amount: req.body.amount,
+        amount,
         method: req.body.method,
         category: req.body.category,
         memo: req.body.memo,

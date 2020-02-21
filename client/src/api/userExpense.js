@@ -20,4 +20,17 @@ const postExpense = (inputData, token) => {
     });
 };
 
-export default postExpense;
+const getAllExpenses = async token => {
+  const url = "/api/expenses";
+
+  return await axios
+    .get(url, { headers: { "x-auth-token": token } })
+    .then(response => {
+      return {success: response.data};
+    })
+    .catch(error => {
+      return {error};
+    });
+};
+
+export { postExpense, getAllExpenses };

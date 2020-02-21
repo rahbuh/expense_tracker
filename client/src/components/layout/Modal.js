@@ -2,16 +2,15 @@ import React, { useState } from "react";
 import { Input, Select } from "./InputFields";
 import { Button } from "./Button";
 
-import postExpense from "../../api/userExpense";
+import { postExpense } from "../../api/userExpense";
 // import { response } from "express";
 
 export const Modal = props => {
   // these will be updated  via API call to users saved lists
   const methods = ["Cash", "Credit Card", "Debit Card", "Paypal", "Apple Pay"];
   const categories = ["Groceries", "Gas", "Dining Out", "Clothes", "Misc"];
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWU0ZTFiZGE0ZDFiYWUzY2M0NDU5NzE0In0sImlhdCI6MTU4MjI1OTc3OCwiZXhwIjoxNTgyMjYzMzc4fQ.t3_kKDWBksEPI7_Rd0C41BddgIqTq_410jN7sAyP4pI";
-
+  const token = props.token
+    
   const [inputData, setInputData] = useState({
     payee: "",
     date: "",
@@ -20,7 +19,7 @@ export const Modal = props => {
     category: "",
     memo: ""
   });
-  const [errorMsg, setErrorMsg] = useState([]);
+  // const [errorMsg, setErrorMsg] = useState([]);
 
   const handleChange = e => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
@@ -36,16 +35,14 @@ export const Modal = props => {
       }
       if (errors) {
         console.log("Errors: ", errors);
-        setErrorMsg(errors)
+        // setErrorMsg(errors);
       }
-      
-      console.log(errorMsg)
+
     });
     // - if user not valid - redirect to login page
     // - else
     // - -- post input to /user/expenses
-    // - -- update state with expense
-    // props.close();
+    props.close();
   };
 
   return (
