@@ -16,6 +16,6 @@ module.exports = function(req, res, next) {
     req.user = decoded.user;
     next();
   } catch (err) {
-    return res.status(401).json({ msg: "Auth failed" });
+    return res.status(401).json({ msg: "Authorization failed" });
   }
 };

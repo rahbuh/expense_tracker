@@ -52,12 +52,6 @@ router.post(
         .isEmpty(),
       check("amount", "Amount is required")
         .not()
-        .isEmpty(),
-      check("method", "Method of payment is required")
-        .not()
-        .isEmpty(),
-      check("category", "Category is required")
-        .not()
         .isEmpty()
     ]
   ],
@@ -82,10 +76,12 @@ router.post(
 
       const expense = await newExpense.save();
 
-      res.json(expense);
+      res.json({ success: expense });
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("Server Error");
+      res
+        .status(500)
+        .json({ errors: [{ msg: "Server Error. Expense not saved" }] });
     }
   }
 );
@@ -127,7 +123,7 @@ router.put("/:id", checkAuth, async (req, res) => {
     if (expense.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: "User not authorized" });
     }
-    
+
     const update = {
       name: req.body.name,
       date: req.body.date,
@@ -136,7 +132,7 @@ router.put("/:id", checkAuth, async (req, res) => {
       category: req.body.category,
       memo: req.body.memo
     };
-    
+
     await expense.updateOne(update);
 
     res.json({ msg: "Expense updated" });
