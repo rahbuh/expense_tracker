@@ -7,7 +7,7 @@ import { getAllExpenses } from "../../api/userExpense";
 
 function Expenses() {
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWU0ZTFiZGE0ZDFiYWUzY2M0NDU5NzE0In0sImlhdCI6MTU4MjMzMTM3MSwiZXhwIjoxNTgyMzM0OTcxfQ.-XdHdLy0e00w3Ql3zexZSdc_g-L3_jCsOCFxR8SIUGg";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWU1MDNiYWUxOWE1N2I0MTU4Mzk5YTU0In0sImlhdCI6MTU4MjMzMjc2NywiZXhwIjoxNTgyMzM2MzY3fQ.XfgWZYQCkphKBBZ9EaOZCG-Dt6hNLud3l5s6Ti6hYAE";
   const [userExpenses, setExpenses] = useState([]);
   const [showModal, setShowModal] = useState(false);
 

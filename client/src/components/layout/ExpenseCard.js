@@ -3,11 +3,11 @@ import { ExpenseField } from "./ExpenseField";
 import moment from "moment";
 
 export const ExpenseCard = props => {
-  const { date, payee, amount, type, category, memo } = props.data;
+  const { _id, date, payee, amount, type, category, memo } = props.data;
   const dateFormatted = moment(date).format("MM/DD/YYYY");
 
   return (
-    <div className="card">
+    <div id={_id} className="card">
       <div className="row row-primary">
         <ExpenseField
           className={"date"}

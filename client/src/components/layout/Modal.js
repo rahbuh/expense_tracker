@@ -17,7 +17,7 @@ export const Modal = props => {
     category: "",
     memo: ""
   });
-  const [errorMsg, setErrorMsg] = useState([]);
+  // const [errorMsg, setErrorMsg] = useState([]);
 
   const handleChange = e => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
@@ -34,7 +34,7 @@ export const Modal = props => {
       }
       if (errors) {
         console.log("Errors: ", errors);
-        setErrorMsg(errors);
+        // setErrorMsg(errors);
       }
     });
     // - if user not valid - redirect to login page
