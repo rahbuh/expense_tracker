@@ -4,10 +4,11 @@ import { Button } from "./Button";
 import { postExpense } from "../../api/userExpense";
 
 export const Modal = props => {
-  // these will be updated  via API call to users saved lists
+  // **** these will be updated via API call to users saved lists
   const methods = ["Cash", "Credit Card", "Debit Card", "Paypal", "Apple Pay"];
   const categories = ["Groceries", "Gas", "Dining Out", "Clothes", "Misc"];
   const token = props.token;
+  // ****
 
   const [inputData, setInputData] = useState({
     payee: "",
@@ -17,7 +18,7 @@ export const Modal = props => {
     category: "",
     memo: ""
   });
-  // const [errorMsg, setErrorMsg] = useState([]);
+  const [errorMsg, setErrorMsg] = useState([]);
 
   const handleChange = e => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
@@ -29,16 +30,14 @@ export const Modal = props => {
       const { success, errors } = response;
 
       if (success) {
-        props.display(success);
+        props.displayAddedExpense(success);
         props.close();
       }
       if (errors) {
-        console.log("Errors: ", errors);
-        // setErrorMsg(errors);
+        setErrorMsg(errors);
       }
     });
     // - if user not valid - redirect to login page
-
   };
 
   return (
@@ -52,12 +51,13 @@ export const Modal = props => {
           ></i>
         </div>
         <div className="modal-body">
+          {errorMsg.length ? <p className="modal-error">{errorMsg[0].msg}</p> : null}
           <form id="expense-form">
             <Input
               type="text"
               title="Payee"
               name="payee"
-              placeholder="who was the payment to?"
+              placeholder="who took your money?"
               onChange={handleChange}
             />
             <Input

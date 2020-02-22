@@ -337,6 +337,8 @@ button {
 
 /* Expense Card */
 .card {
+  display: flex;
+  flex-wrap: wrap;
   border: 1px solid #e6e6e6;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
@@ -354,19 +356,12 @@ button {
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
-.row {
-  display: inline-block;
-}
-
-.row-primary {
-  max-width: 500px;
-}
-
 .expense-title {
   font-weight: bold;
 }
 
 .expense-data {
+  display: inline-block;
   border-bottom: 1px solid #ccc;
   background-color: #fff;
   color: #1b1b1b;
@@ -471,6 +466,14 @@ button {
   cursor: pointer;
 }
 
+.modal-error {
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  color: var(--danger-color);
+  margin-top: 5px;
+}
+
 .modal input[type="text"],
 .modal input[type="date"],
 .modal input[type="number"],
@@ -556,8 +559,7 @@ select::-moz-focus-inner {
   }
 
   .row-icons {
-    display: flex;
-    justify-content: center;
+    margin: 0 auto;
   }
 
   /* Modal */
@@ -572,6 +574,10 @@ select::-moz-focus-inner {
   .modal-title,
   .close-modal {
     font-size: 1.25rem;
+  }
+
+  .modal-error {
+    font-size: .9rem;
   }
 
   .modal input[type="text"],
