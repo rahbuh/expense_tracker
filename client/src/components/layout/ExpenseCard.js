@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useRef } from "react";
 import { ExpenseField } from "./ExpenseField";
-import {formatDate} from "../../helpers/format"
+import { formatDate } from "../../helpers/format";
 
 export const ExpenseCard = props => {
   const { _id, date, payee, amount, type, category, memo } = props.data;
+  const expenseCard = useRef();
+
+  const deleteExpense = () => {
+    console.log(expenseCard.current.id)
+  }
 
   return (
-    <div id={_id} className="card">
+    <div id={_id} className="card" ref={expenseCard}>
       <div className="row row-primary">
         <ExpenseField
           className={"date"}
@@ -27,7 +32,7 @@ export const ExpenseCard = props => {
       </div>
       <div className="row row-icons">
         <i id="edit-expense" className="fas fa-edit"></i>
-        <i id="delete-expense" className="far fa-trash-alt"></i>
+        <i id="delete-expense" className="far fa-trash-alt" onClick={deleteExpense}></i>
       </div>
     </div>
   );
