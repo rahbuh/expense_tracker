@@ -7,7 +7,7 @@ import { getAllExpenses } from "../../api/userExpense";
 
 function Expenses() {
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWU0ZTFiZGE0ZDFiYWUzY2M0NDU5NzE0In0sImlhdCI6MTU4MjMyNjY5NSwiZXhwIjoxNTgyMzMwMjk1fQ.8oS2PiHVRzMeQwq_E_dCoJID58zhb-gu6RBjJ1DvLwc";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWU0ZTFiZGE0ZDFiYWUzY2M0NDU5NzE0In0sImlhdCI6MTU4MjMzMTM3MSwiZXhwIjoxNTgyMzM0OTcxfQ.-XdHdLy0e00w3Ql3zexZSdc_g-L3_jCsOCFxR8SIUGg";
   const [userExpenses, setExpenses] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
@@ -27,6 +27,10 @@ function Expenses() {
         console.log("Error returned: ", error);
       }
     });
+  };
+
+  const displayAddedExpense = newExpense => {
+    setExpenses(prevState => [...prevState, newExpense]);
   };
 
   const closeModal = () => {
@@ -60,7 +64,12 @@ function Expenses() {
         </div>
       </div>
       {showModal ? (
-        <Modal title={"Add Expense"} close={closeModal} token={token} />
+        <Modal
+          title={"Add Expense"}
+          display={displayAddedExpense}
+          close={closeModal}
+          token={token}
+        />
       ) : null}
     </Fragment>
   );

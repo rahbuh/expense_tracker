@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const postExpense = (inputData, token) => {
+const postExpense = async (inputData, token) => {
   const data = JSON.stringify(inputData);
   const url = "/api/expenses";
   const config = {
@@ -10,7 +10,7 @@ const postExpense = (inputData, token) => {
     }
   };
 
-  return axios
+  return await axios
     .post(url, data, config)
     .then(response => {
       return response.data;

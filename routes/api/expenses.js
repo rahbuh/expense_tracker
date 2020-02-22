@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
-
 const checkAuth = require("../../middleware/check-auth");
 const User = require("../../models/User");
 const Expense = require("../../models/Expense");
@@ -62,7 +61,8 @@ router.post(
 
     try {
       const user = await User.findById(req.user.id).select("-password");
-      const amount = String(parseFloat(req.body.amount).toFixed(2))
+      const amount = String(parseFloat(req.body.amount).toFixed(2));
+
       const newExpense = new Expense({
         payee: req.body.payee,
         date: req.body.date,
