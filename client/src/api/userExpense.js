@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const postExpense = async (inputData, token) => {
+const postExpenseAPI = async (inputData, token) => {
   const data = JSON.stringify(inputData);
   const url = "/api/expenses";
   const config = {
@@ -20,17 +20,30 @@ const postExpense = async (inputData, token) => {
     });
 };
 
-const getAllExpenses = async token => {
+const getExpensesAPI = async token => {
   const url = "/api/expenses";
 
   return await axios
     .get(url, { headers: { "x-auth-token": token } })
     .then(response => {
-      return {success: response.data};
+      return { success: response.data };
     })
     .catch(error => {
-      return {error};
+      return { error };
     });
 };
 
-export { postExpense, getAllExpenses };
+const deleteExpenseAPI = async (token, id) => {
+  const url = `/api/expenses/${id}`;
+
+  return await axios
+    .delete(url, { headers: { "x-auth-token": token } })
+    .then(response => {
+      return { success: response.data };
+    })
+    .catch(error => {
+      return { error };
+    });
+};
+
+export { postExpenseAPI, getExpensesAPI, deleteExpenseAPI };

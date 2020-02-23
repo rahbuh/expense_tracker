@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Input, Select } from "./InputFields";
 import { Button } from "./Button";
-import { postExpense } from "../../api/userExpense";
+import { postExpenseAPI } from "../../api/userExpense";
 
 export const Modal = props => {
   // **** these will be updated via API call to users saved lists
@@ -26,11 +26,11 @@ export const Modal = props => {
 
   const saveExpense = e => {
     e.preventDefault();
-    postExpense(inputData, token).then(response => {
+    postExpenseAPI(inputData, token).then(response => {
       const { success, errors } = response;
 
       if (success) {
-        props.displayAddedExpense(success);
+        props.updateExpenseList(success);
         props.close();
       }
       if (errors) {

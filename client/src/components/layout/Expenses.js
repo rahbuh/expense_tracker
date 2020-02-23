@@ -3,12 +3,10 @@ import { ExpenseCard } from "./ExpenseCard";
 import { Button } from "./Button";
 import { Modal } from "./Modal";
 
-import { getAllExpenses } from "../../api/userExpense";
+import { getExpensesAPI } from "../../api/userExpense";
+import {token} from "../../helpers/token"
 
 function Expenses() {
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWU0ZTFiZGE0ZDFiYWUzY2M0NDU5NzE0In0sImlhdCI6MTU4MjQwNjc5NiwiZXhwIjoxNTgyNDEwMzk2fQ.OAkqu1catbRFiHDqL0hJvbcoyiNaX8D87sT8nImLdQQ";
-
   const [userExpenses, setExpenses] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
@@ -17,7 +15,7 @@ function Expenses() {
   }, []);
 
   const getExpenses = () => {
-    getAllExpenses(token).then(response => {
+    getExpensesAPI(token).then(response => {
       const { success, error } = response;
 
       if (success) {
@@ -30,7 +28,7 @@ function Expenses() {
     });
   };
 
-  const displayAddedExpense = newExpense => {
+  const updateExpenseList = newExpense => {
     setExpenses(prevState => [...prevState, newExpense]);
   };
 
@@ -67,7 +65,7 @@ function Expenses() {
       {showModal ? (
         <Modal
           title={"Add Expense"}
-          displayAddedExpense={displayAddedExpense}
+          updateExpenseList={updateExpenseList}
           close={closeModal}
           token={token}
         />

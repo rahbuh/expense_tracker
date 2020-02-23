@@ -4,6 +4,7 @@ package-lock.json
 /node_modules
 /client/node_modules
 /config/default.json
+/client/src/helpers/token.js
 
 # production
 /client/build
