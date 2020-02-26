@@ -31,8 +31,7 @@ router.get("/:id", checkAuth, async (req, res) => {
     if (err.kind === "ObjectId") {
       return res.status(404).json({ msg: "Expense not found" });
     }
-
-    res.status(500).send("Server Error");
+    res.status(500).json({ errors: [{ msg: "Server Error" }] });
   }
 });
 
@@ -78,9 +77,7 @@ router.post(
       res.json({ success: expense });
     } catch (err) {
       console.error(err.message);
-      res
-        .status(500)
-        .json({ errors: [{ msg: "Server Error. Expense not saved" }] });
+      res.status(500).json({ errors: [{ msg: "Server Error" }] });
     }
   }
 );
@@ -106,7 +103,7 @@ router.delete("/:id", checkAuth, async (req, res) => {
     if (err.kind === "ObjectId") {
       return res.status(404).json({ msg: "Expense not found" });
     }
-    res.status(500).send("Server Error");
+    res.status(500).json({ errors: [{ msg: "Server Error" }] });
   }
 });
 
@@ -140,7 +137,7 @@ router.put("/:id", checkAuth, async (req, res) => {
     if (err.kind === "ObjectId") {
       return res.status(404).json({ msg: "Expense not found" });
     }
-    res.status(500).send("Server Error");
+    res.status(500).json({ errors: [{ msg: "Server Error" }] });
   }
 });
 

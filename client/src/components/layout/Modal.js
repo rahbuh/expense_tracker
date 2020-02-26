@@ -6,7 +6,18 @@ import { postExpenseAPI } from "../../api/userExpense";
 export const Modal = props => {
   // **** these will be updated via API call to users saved lists
   const methods = ["Cash", "Credit Card", "Debit Card", "Paypal", "Apple Pay"];
-  const categories = ["Groceries", "Gas", "Dining Out", "Clothes", "Misc"];
+  const categories = [
+    "Groceries",
+    "Gas",
+    "Dining Out",
+    "Clothing",
+    "Transportation",
+    "Entertainment",
+    "Recreation",
+    "Personal Care",
+    "Travel",
+    "Misc"
+  ];
   const token = props.token;
   // ****
 
@@ -18,7 +29,13 @@ export const Modal = props => {
     category: "",
     memo: ""
   });
+
   const [errorMsg, setErrorMsg] = useState([]);
+
+  // setInputData(prevState => ({
+  //     ...prevState,
+  //     ...update
+  //   }));
 
   const handleChange = e => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
@@ -26,11 +43,12 @@ export const Modal = props => {
 
   const saveExpense = e => {
     e.preventDefault();
+    console.log(inputData);
     postExpenseAPI(inputData, token).then(response => {
       const { success, errors } = response;
 
       if (success) {
-        props.updateExpenseList(success);
+        // props.updateExpenseList(success);
         props.close();
       }
       if (errors) {
@@ -41,22 +59,25 @@ export const Modal = props => {
   };
 
   return (
-    <div id="ExpenseModal" className="modal">
+    <div id="Modal" className="modal">
       <div className="modal-content">
         <div className="modal-header">
-          <p className="modal-title">{props.title}</p>
+          <p className="modal-title">{props.type.title}</p>
           <i
             className="close-modal far fa-times-circle"
             onClick={props.close}
           ></i>
         </div>
         <div className="modal-body">
-          {errorMsg.length ? <p className="modal-error">{errorMsg[0].msg}</p> : null}
+          {errorMsg.length ? (
+            <p className="modal-error">{errorMsg[0].msg}</p>
+          ) : null}
           <form id="expense-form">
             <Input
               type="text"
               title="Payee"
               name="payee"
+              value={inputData.payee}
               placeholder="who took your money?"
               onChange={handleChange}
             />
@@ -64,12 +85,14 @@ export const Modal = props => {
               type="date"
               title="Date"
               name="date"
+              value={inputData.date}
               onChange={handleChange}
             />
             <Input
               type="number"
               title="Amount"
               name="amount"
+              value={inputData.amount}
               placeholder="0.00"
               step="0.01"
               onChange={handleChange}
@@ -92,13 +115,14 @@ export const Modal = props => {
               type="text"
               title="Memo"
               name="memo"
+              value={inputData.memo}
               placeholder="anything to note?"
               onChange={handleChange}
             />
             <Button
               id="save-expense"
               className="btn btn-modal my"
-              btnName="Save"
+              btnName={props.type.btnName}
               action={saveExpense}
             />
           </form>

@@ -3,12 +3,13 @@ import { ExpenseCard } from "./ExpenseCard";
 import { Button } from "./Button";
 import { Modal } from "./Modal";
 
-import { getExpensesAPI } from "../../api/userExpense";
-import {token} from "../../helpers/token"
+import { getExpensesAPI, deleteExpenseAPI } from "../../api/userExpense";
+import { token } from "../../helpers/token";
 
 function Expenses() {
   const [userExpenses, setExpenses] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState();
 
   useEffect(() => {
     getExpenses();
@@ -28,6 +29,28 @@ function Expenses() {
     });
   };
 
+  // const getExpense = (id) => {
+  //   console.log(id);
+  // }
+
+  const editExpense = e => {
+    setShowModal(true);
+    setModalType({title: "Edit Expense", btnName: "Update"})
+  };
+
+  const deleteExpense = id => {
+    deleteExpenseAPI(token, id).then(response => {
+      console.log(response);
+      // const { success, errors } = response;
+      // if (success) {
+      //   console.log(success)
+      // }
+      // if (errors) {
+      //   console.log(errors);
+      // }
+    });
+  };
+
   const updateExpenseList = newExpense => {
     setExpenses(prevState => [...prevState, newExpense]);
   };
@@ -37,7 +60,14 @@ function Expenses() {
   };
 
   const expenseList = userExpenses.map(expense => {
-    return <ExpenseCard key={expense._id} data={expense} />;
+    return (
+      <ExpenseCard
+        key={expense._id}
+        data={expense}
+        editExpense={editExpense}
+        deleteExpense={deleteExpense}
+      />
+    );
   });
 
   return (
@@ -50,7 +80,10 @@ function Expenses() {
               id="add-expense"
               className="btn btn-standard"
               btnName="Add Expense"
-              action={() => setShowModal(true)}
+              action={e => {
+                setShowModal(true);
+                setModalType({title: "Add Expense", btnName: "Save"})
+              }}
             />
           </div>
           <div id="expense-list">
@@ -64,8 +97,8 @@ function Expenses() {
       </div>
       {showModal ? (
         <Modal
-          title={"Add Expense"}
-          updateExpenseList={updateExpenseList}
+          type={modalType}
+          // updateExpenseList={updateExpenseList}
           close={closeModal}
           token={token}
         />

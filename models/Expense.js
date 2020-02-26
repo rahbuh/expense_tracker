@@ -26,6 +26,14 @@ const ExpenseSchema = new Schema({
   },
   memo: {
     type: String
+  },
+  created: {
+    type: Date,
+    default: Date.now
+  },
+  updated: {
+    type: Date,
+    default: Date.now
   }
 });
 
