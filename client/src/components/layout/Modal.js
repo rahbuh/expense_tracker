@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Input, Select } from "./InputFields";
 import { Button } from "./Button";
-import { postExpenseAPI } from "../../api/userExpense";
+import { postExpenseAPI, updateExpenseAPI } from "../../api/userExpense";
 
 export const Modal = props => {
   // **** these will be updated via API call to users saved lists
@@ -35,7 +35,7 @@ export const Modal = props => {
         const { success, errors } = response;
 
         if (success) {
-          // props.updateExpenseList(success);
+          // UPDATE EXPENSE LIST
           props.close();
         }
         if (errors) {
@@ -45,10 +45,14 @@ export const Modal = props => {
     }
 
     if (props.type.modal === "edit") {
+      updateExpenseAPI(inputData, token).then(response => {
+        console.log(response);
+ 
+      });
       console.log("Expense Updated");
       props.close();
     }
-    // - if user not valid - redirect to login page
+    // IF USER NOT VALID, REDIRECT TO LOGIN PAGE
   };
 
   return (

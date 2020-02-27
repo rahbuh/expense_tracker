@@ -1,7 +1,11 @@
 import moment from "moment";
 
-const formatDate = date => {
+const formatDisplayDate = date => {
   return moment(date).format("MM/DD/YYYY");
 };
 
-export { formatDate };
+const formatInputDate = date => {
+  return moment(date).format("YYYY-MM-DD");
+}
+
+export { formatDisplayDate, formatInputDate };

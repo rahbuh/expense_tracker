@@ -111,7 +111,6 @@ router.delete("/:id", checkAuth, async (req, res) => {
 router.put("/:id", checkAuth, async (req, res) => {
   try {
     const expense = await Expense.findById(req.params.id);
-
     if (!expense) {
       return res.status(404).json({ msg: "Expense not found" });
     }
@@ -121,12 +120,13 @@ router.put("/:id", checkAuth, async (req, res) => {
     }
 
     const update = {
-      name: req.body.name,
+      payee: req.body.payee,
       date: req.body.date,
       amount: req.body.amount,
       method: req.body.method,
       category: req.body.category,
-      memo: req.body.memo
+      memo: req.body.memo,
+      updated: Date.now()
     };
 
     await expense.updateOne(update);

@@ -2,15 +2,28 @@ import React, { Fragment, useState, useEffect } from "react";
 import { ExpenseCard } from "./ExpenseCard";
 import { Button } from "./Button";
 import { Modal } from "./Modal";
+import { formatInputDate } from "../../helpers/format";
+import {
+  getAllExpensesAPI,
+  getSingleExpenseAPI,
+  deleteExpenseAPI
+} from "../../api/userExpense";
 
-import { getAllExpensesAPI, deleteExpenseAPI } from "../../api/userExpense";
 import { token } from "../../helpers/token";
 
-function Expenses() {
+const Expenses = () => {
   const [userExpenses, setExpenses] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState();
-  const [expenseData, setExpenseData] = useState({});
+  const [expenseData, setExpenseData] = useState({
+    _id: "",
+    payee: "",
+    date: "",
+    amount: "",
+    method: "",
+    category: "",
+    memo: ""
+  });
 
   useEffect(() => {
     getExpenses();
@@ -19,12 +32,11 @@ function Expenses() {
   const getExpenses = () => {
     getAllExpensesAPI(token).then(response => {
       const { success, error } = response;
-
       if (success) {
         setExpenses(success.map(expense => ({ ...expense })));
       }
       if (error) {
-        // should cause redirect to login
+        // IF ERROR, REDIRECT TO LOGIN PAGE
         console.log("Error returned: ", error);
       }
     });
@@ -33,37 +45,40 @@ function Expenses() {
   const addNewExpense = () => {
     setExpenseData(prevState => {
       const update = { ...prevState };
-      for (let key in update) {
-        update[key] = "";
-      }
+      for (let key in update) update[key] = "";
       return { ...prevState, ...update };
     });
     setModalType({ title: "Add Expense", btnName: "Save", modal: "new" });
     setShowModal(true);
   };
 
-  // const getExpense = (id) => {
-  //   console.log(id);
-  // }
-
   const editExpense = id => {
-    // getExpense...
-    const expenseToUpdate = {
-      payee: "Starbucks",
-      date: "2020-02-18",
-      amount: "2.55",
-      method: "Cash",
-      category: "Misc",
-      memo: "this is cool"
-    };
+    getSingleExpenseAPI(id, token).then(response => {
+      const expense = response.success
+      if (expense) {
+        const update = {
+          _id: expense._id,
+          payee: expense.payee,
+          date: formatInputDate(expense.date),
+          amount: parseFloat(expense.amount),
+          method: expense.method,
+          category: expense.category,
+          memo: expense.memo
+        };
 
-    setExpenseData(prevState => ({ ...prevState, ...expenseToUpdate }));
-    setModalType({ title: "Edit Expense", btnName: "Update", modal: "edit" });
-    setShowModal(true);
+        setExpenseData(prevState => ({ ...prevState, ...update }));
+        setModalType({
+          title: "Edit Expense",
+          btnName: "Update",
+          modal: "edit"
+        });
+        setShowModal(true);
+      }
+    });
   };
 
   const deleteExpense = id => {
-    deleteExpenseAPI(token, id).then(response => {
+    deleteExpenseAPI(id, token).then(response => {
       console.log(response);
       // const { success, errors } = response;
       // if (success) {
@@ -75,24 +90,22 @@ function Expenses() {
     });
   };
 
-  // const updateExpenseList = newExpense => {
-  //   setExpenses(prevState => [...prevState, newExpense]);
-  // };
-
   const closeModal = () => {
     setShowModal(false);
   };
 
-  const expenseList = userExpenses.map(expense => {
-    return (
-      <ExpenseCard
-        key={expense._id}
-        data={expense}
-        editExpense={editExpense}
-        deleteExpense={deleteExpense}
-      />
-    );
-  });
+  const expenseList = userExpenses
+    .sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
+    .map(expense => {
+      return (
+        <ExpenseCard
+          key={expense._id}
+          data={expense}
+          editExpense={editExpense}
+          deleteExpense={deleteExpense}
+        />
+      );
+    });
 
   return (
     <Fragment>
@@ -126,6 +139,6 @@ function Expenses() {
       ) : null}
     </Fragment>
   );
-}
+};
 
 export default Expenses;

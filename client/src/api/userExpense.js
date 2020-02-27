@@ -46,7 +46,27 @@ const postExpenseAPI = async (inputData, token) => {
     });
 };
 
-const deleteExpenseAPI = async (token, id) => {
+const updateExpenseAPI = async (inputData, token) => {
+  const data = JSON.stringify(inputData);
+  const url = `/api/expenses/${inputData._id}`;
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      "x-auth-token": token
+    }
+  };
+
+  return await axios
+    .put(url, data, config)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {
+      return error.response.data;
+    });
+};
+
+const deleteExpenseAPI = async (id, token) => {
   const url = `/api/expenses/${id}`;
 
   return await axios
@@ -63,6 +83,7 @@ export {
   getSingleExpenseAPI,
   getAllExpensesAPI,
   postExpenseAPI,
+  updateExpenseAPI,
   deleteExpenseAPI
 };
 

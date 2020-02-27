@@ -1,10 +1,9 @@
 import React, { useRef } from "react";
 import { ExpenseField } from "./ExpenseField";
-import { formatDate } from "../../helpers/format";
-
+import { formatDisplayDate } from "../../helpers/format";
 
 export const ExpenseCard = props => {
-  const { _id, date, payee, amount, type, category, memo } = props.data;
+  const { _id, date, payee, amount, method, category, memo } = props.data;
   const expenseCard = useRef();
 
   return (
@@ -13,13 +12,13 @@ export const ExpenseCard = props => {
         <ExpenseField
           className={"date"}
           title={"Date: "}
-          data={formatDate(date)}
+          data={formatDisplayDate(date)}
         />
         <ExpenseField className={"amount"} title={"Amount: "} data={amount} />
         <ExpenseField className={"payee"} title={"Payee: "} data={payee} />
       </div>
       <div className="row row-secondary">
-        <ExpenseField className={"type"} title={"Type: "} data={type} />
+        <ExpenseField className={"type"} title={"Type: "} data={method} />
         <ExpenseField
           className={"category"}
           title={"Category: "}
