@@ -10,6 +10,7 @@ function Expenses() {
   const [userExpenses, setExpenses] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState();
+  const [expenseData, setExpenseData] = useState({});
 
   useEffect(() => {
     getExpenses();
@@ -29,13 +30,36 @@ function Expenses() {
     });
   };
 
+  const addNewExpense = () => {
+    setExpenseData(prevState => {
+      const update = { ...prevState };
+      for (let key in update) {
+        update[key] = "";
+      }
+      return { ...prevState, ...update };
+    });
+    setModalType({ title: "Add Expense", btnName: "Save", modal: "new" });
+    setShowModal(true);
+  };
+
   // const getExpense = (id) => {
   //   console.log(id);
   // }
 
-  const editExpense = e => {
+  const editExpense = id => {
+    // getExpense...
+    const expenseToUpdate = {
+      payee: "Starbucks",
+      date: "2020-02-18",
+      amount: "2.55",
+      method: "Cash",
+      category: "Misc",
+      memo: "this is cool"
+    };
+
+    setExpenseData(prevState => ({ ...prevState, ...expenseToUpdate }));
+    setModalType({ title: "Edit Expense", btnName: "Update", modal: "edit" });
     setShowModal(true);
-    setModalType({title: "Edit Expense", btnName: "Update"})
   };
 
   const deleteExpense = id => {
@@ -51,9 +75,9 @@ function Expenses() {
     });
   };
 
-  const updateExpenseList = newExpense => {
-    setExpenses(prevState => [...prevState, newExpense]);
-  };
+  // const updateExpenseList = newExpense => {
+  //   setExpenses(prevState => [...prevState, newExpense]);
+  // };
 
   const closeModal = () => {
     setShowModal(false);
@@ -80,10 +104,7 @@ function Expenses() {
               id="add-expense"
               className="btn btn-standard"
               btnName="Add Expense"
-              action={e => {
-                setShowModal(true);
-                setModalType({title: "Add Expense", btnName: "Save"})
-              }}
+              action={e => addNewExpense()}
             />
           </div>
           <div id="expense-list">
@@ -98,7 +119,7 @@ function Expenses() {
       {showModal ? (
         <Modal
           type={modalType}
-          // updateExpenseList={updateExpenseList}
+          expenseData={expenseData}
           close={closeModal}
           token={token}
         />

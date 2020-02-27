@@ -21,21 +21,8 @@ export const Modal = props => {
   const token = props.token;
   // ****
 
-  const [inputData, setInputData] = useState({
-    payee: "",
-    date: "",
-    amount: "",
-    method: "",
-    category: "",
-    memo: ""
-  });
-
+  const [inputData, setInputData] = useState({ ...props.expenseData });
   const [errorMsg, setErrorMsg] = useState([]);
-
-  // setInputData(prevState => ({
-  //     ...prevState,
-  //     ...update
-  //   }));
 
   const handleChange = e => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
@@ -43,18 +30,24 @@ export const Modal = props => {
 
   const saveExpense = e => {
     e.preventDefault();
-    console.log(inputData);
-    postExpenseAPI(inputData, token).then(response => {
-      const { success, errors } = response;
+    if (props.type.modal === "new") {
+      postExpenseAPI(inputData, token).then(response => {
+        const { success, errors } = response;
 
-      if (success) {
-        // props.updateExpenseList(success);
-        props.close();
-      }
-      if (errors) {
-        setErrorMsg(errors);
-      }
-    });
+        if (success) {
+          // props.updateExpenseList(success);
+          props.close();
+        }
+        if (errors) {
+          setErrorMsg(errors);
+        }
+      });
+    }
+
+    if (props.type.modal === "edit") {
+      console.log("Expense Updated");
+      props.close();
+    }
     // - if user not valid - redirect to login page
   };
 
@@ -74,48 +67,48 @@ export const Modal = props => {
           ) : null}
           <form id="expense-form">
             <Input
+              defaultValue={inputData.payee}
               type="text"
               title="Payee"
               name="payee"
-              value={inputData.payee}
               placeholder="who took your money?"
               onChange={handleChange}
             />
             <Input
+              defaultValue={inputData.date}
               type="date"
               title="Date"
               name="date"
-              value={inputData.date}
               onChange={handleChange}
             />
             <Input
+              defaultValue={inputData.amount}
               type="number"
               title="Amount"
               name="amount"
-              value={inputData.amount}
               placeholder="0.00"
               step="0.01"
               onChange={handleChange}
             />
             <Select
+              defaultValue={inputData.method}
               title="Payment Method"
               name="method"
               options={[...methods]}
-              value={inputData.method}
               onChange={handleChange}
             />
             <Select
+              defaultValue={inputData.category}
               title="Category"
               name="category"
               options={[...categories]}
-              value={inputData.category}
               onChange={handleChange}
             />
             <Input
+              defaultValue={inputData.memo}
               type="text"
               title="Memo"
               name="memo"
-              value={inputData.memo}
               placeholder="anything to note?"
               onChange={handleChange}
             />

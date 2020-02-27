@@ -5,12 +5,12 @@ const Input = props => {
     <Fragment>
       <label htmlFor={props.name}>{props.title}</label>
       <input
+        defaultValue={props.defaultValue}
         type={props.type}
         name={props.name}
         id={props.name}
         placeholder={props.placeholder}
         step={props.step}
-        value={props.value}
         onChange={props.onChange}
       />
     </Fragment>
@@ -30,9 +30,9 @@ const Select = props => {
     <Fragment>
       <label htmlFor={props.name}>{props.title}</label>
       <select
+        defaultValue={props.defaultValue}
         name={props.name}
         id={props.name}
-        value={props.value}
         onChange={props.onChange}
       >
         <option defaultValue>Select an Option</option>
