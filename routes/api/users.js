@@ -2,8 +2,11 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
+const defaultList = require("../../helpers/lists");
 
 const User = require("../../models/User");
+const Category = require("../../models/Category");
+const PayType = require("../../models/PayType");
 
 // USER REGISTRATION
 router.post(
@@ -32,11 +35,17 @@ router.post(
       }
 
       user = new User({ name, email, password });
+      
+      // create default categories and pay types for user
+      categories = new Category({user: user.id, categories: [...defaultList.categories]})
+      payType = new PayType({user: user.id, payType: [...defaultList.methods]})
 
       const salt = await bcrypt.genSalt(10);
       user.password = await bcrypt.hash(password, salt);
 
       await user.save();
+      await categories.save();
+      await payType.save();
 
       res.json({ success: true });
     } catch (err) {
