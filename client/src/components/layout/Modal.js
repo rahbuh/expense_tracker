@@ -4,11 +4,7 @@ import { Button } from "./Button";
 import { postExpenseAPI, updateExpenseAPI } from "../../api/userExpense";
 
 export const Modal = props => {
-  // **** these will be updated via API call to users saved lists
-  const methods = ["Cash", "Credit Card", "Debit Card", "Paypal", "Apple Pay"];
-  const token = props.token;
-
-  // ****
+  const token = props.token;   // WILL BE SET BY LOGIN
 
   const [inputData, setInputData] = useState({ ...props.expenseData });
   const [errorMsg, setErrorMsg] = useState([]);
@@ -87,7 +83,7 @@ export const Modal = props => {
               defaultValue={inputData.method}
               title="Payment Method"
               name="method"
-              options={[...methods]}
+              options={[...props.paytype.sort()]}
               onChange={handleChange}
             />
             <Select

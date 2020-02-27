@@ -8,13 +8,14 @@ import {
   getSingleExpenseAPI,
   deleteExpenseAPI
 } from "../../api/userExpense";
-import { getUserCategoriesAPI } from "../../api/userLists";
+import { getUserCategoriesAPI, getUserPayTypesAPI } from "../../api/userLists";
 
-import { token } from "../../helpers/token";
+import { token } from "../../helpers/token"; // WILL BE SET BY LOGIN
 
 const Expenses = () => {
   const [userExpenses, setExpenses] = useState([]);
   const [userCategories, setUserCategories] = useState([]);
+  const [userPayType, setUserPayType] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState();
   const [expenseData, setExpenseData] = useState({
@@ -30,6 +31,7 @@ const Expenses = () => {
   useEffect(() => {
     getExpenses();
     getCategories();
+    getPayTypes();
   }, []);
 
   const getExpenses = () => {
@@ -50,6 +52,19 @@ const Expenses = () => {
       const { success, error } = response;
       if (success) {
         setUserCategories([...success]);
+      }
+      if (error) {
+        // IF ERROR, REDIRECT TO LOGIN PAGE
+        console.log("Error returned: ", error);
+      }
+    });
+  };
+
+  const getPayTypes = () => {
+    getUserPayTypesAPI(token).then(response => {
+      const { success, error } = response;
+      if (success) {
+        setUserPayType([...success]);
       }
       if (error) {
         // IF ERROR, REDIRECT TO LOGIN PAGE
@@ -152,6 +167,7 @@ const Expenses = () => {
           close={closeModal}
           token={token}
           categories={userCategories}
+          paytype={userPayType}
         />
       ) : null}
     </Fragment>

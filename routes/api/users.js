@@ -70,8 +70,8 @@ router.get("/categories", checkAuth, async (req, res) => {
 // GET EXPENSE PAYMENT TYPES FOR USER
 router.get("/paytype", checkAuth, async (req, res) => {
   try {
-    const categories = await Category.find({ user: req.user.id });
-    res.json(categories[0]);
+    const paytypes = await PayType.find({ user: req.user.id });
+    res.json(paytypes[0]);
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ errors: [{ msg: "Server Error" }] });

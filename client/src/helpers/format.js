@@ -8,4 +8,8 @@ const formatInputDate = date => {
   return moment(date).format("YYYY-MM-DD");
 }
 
-export { formatDisplayDate, formatInputDate };
+const formatDisplayAmount = amount => {
+  return amount.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
+
+export { formatDisplayDate, formatInputDate, formatDisplayAmount };
