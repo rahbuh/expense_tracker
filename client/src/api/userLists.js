@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const getUsersListsAPI = async token => {
-  const url = "/api/users/lists";
+const getUserCategoriesAPI = async token => {
+  const url = "/api/users/categories";
 
   return await axios
     .get(url, { headers: { "x-auth-token": token } })
@@ -13,9 +13,9 @@ const getUsersListsAPI = async token => {
     });
 };
 
-const updateUsersListsAPI = async (listData, token) => {
+const updateUserCategoriesAPI = async (listData, token) => {
   const data = JSON.stringify(listData);
-  const url = `/api/users/lists/${listData._id}`;
+  const url = `/api/users/categories/${listData._id}`;
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -33,4 +33,4 @@ const updateUsersListsAPI = async (listData, token) => {
     });
 };
 
-export { getUsersListsAPI, updateUsersListsAPI };
+export { getUserCategoriesAPI, updateUserCategoriesAPI };

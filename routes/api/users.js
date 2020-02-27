@@ -2,6 +2,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
+const checkAuth = require("../../middleware/check-auth");
 const defaultList = require("../../helpers/lists");
 
 const User = require("../../models/User");
@@ -35,7 +36,7 @@ router.post(
       }
 
       user = new User({ name, email, password });
-      
+
       // create default categories and pay types for user
       categories = new Category({user: user.id, categories: [...defaultList.categories]})
       payType = new PayType({user: user.id, payType: [...defaultList.methods]})
@@ -54,5 +55,16 @@ router.post(
     }
   }
 );
+
+// GET EXPENSE CATEGORIES FOR USER
+router.get("/categories", checkAuth, async (req, res) => {
+  try {
+    const categories = await Category.find({ user: req.user.id });
+    res.json(expenses);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ errors: [{ msg: "Server Error" }] });
+  }
+});
 
 module.exports = router;
