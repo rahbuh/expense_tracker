@@ -1,5 +1,31 @@
 import axios from "axios";
 
+const getAllExpensesAPI = async token => {
+  const url = "/api/expenses";
+
+  return await axios
+    .get(url, { headers: { "x-auth-token": token } })
+    .then(response => {
+      return { success: response.data };
+    })
+    .catch(error => {
+      return { error };
+    });
+};
+
+const getSingleExpenseAPI = async (id, token) => {
+  const url = `/api/expenses/${id}`;
+
+  return await axios
+    .get(url, { headers: { "x-auth-token": token } })
+    .then(response => {
+      return { success: response.data };
+    })
+    .catch(error => {
+      return { error };
+    });
+};
+
 const postExpenseAPI = async (inputData, token) => {
   const data = JSON.stringify(inputData);
   const url = "/api/expenses";
@@ -20,19 +46,6 @@ const postExpenseAPI = async (inputData, token) => {
     });
 };
 
-const getExpensesAPI = async token => {
-  const url = "/api/expenses";
-
-  return await axios
-    .get(url, { headers: { "x-auth-token": token } })
-    .then(response => {
-      return { success: response.data };
-    })
-    .catch(error => {
-      return { error };
-    });
-};
-
 const deleteExpenseAPI = async (token, id) => {
   const url = `/api/expenses/${id}`;
 
@@ -46,4 +59,10 @@ const deleteExpenseAPI = async (token, id) => {
     });
 };
 
-export { postExpenseAPI, getExpensesAPI, deleteExpenseAPI };
+export {
+  getSingleExpenseAPI,
+  getAllExpensesAPI,
+  postExpenseAPI,
+  deleteExpenseAPI
+};
+

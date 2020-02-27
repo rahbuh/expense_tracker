@@ -3,7 +3,7 @@ import { ExpenseCard } from "./ExpenseCard";
 import { Button } from "./Button";
 import { Modal } from "./Modal";
 
-import { getExpensesAPI, deleteExpenseAPI } from "../../api/userExpense";
+import { getAllExpensesAPI, deleteExpenseAPI } from "../../api/userExpense";
 import { token } from "../../helpers/token";
 
 function Expenses() {
@@ -17,7 +17,7 @@ function Expenses() {
   }, []);
 
   const getExpenses = () => {
-    getExpensesAPI(token).then(response => {
+    getAllExpensesAPI(token).then(response => {
       const { success, error } = response;
 
       if (success) {
