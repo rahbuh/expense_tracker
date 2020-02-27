@@ -6,19 +6,8 @@ import { postExpenseAPI, updateExpenseAPI } from "../../api/userExpense";
 export const Modal = props => {
   // **** these will be updated via API call to users saved lists
   const methods = ["Cash", "Credit Card", "Debit Card", "Paypal", "Apple Pay"];
-  const categories = [
-    "Groceries",
-    "Gas",
-    "Dining Out",
-    "Clothing",
-    "Transportation",
-    "Entertainment",
-    "Recreation",
-    "Personal Care",
-    "Travel",
-    "Misc"
-  ];
   const token = props.token;
+
   // ****
 
   const [inputData, setInputData] = useState({ ...props.expenseData });
@@ -105,7 +94,7 @@ export const Modal = props => {
               defaultValue={inputData.category}
               title="Category"
               name="category"
-              options={[...categories]}
+              options={[...props.categories.sort()]}
               onChange={handleChange}
             />
             <Input

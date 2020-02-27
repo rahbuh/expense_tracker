@@ -60,11 +60,23 @@ router.post(
 router.get("/categories", checkAuth, async (req, res) => {
   try {
     const categories = await Category.find({ user: req.user.id });
-    res.json(expenses);
+    res.json(categories[0]);
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ errors: [{ msg: "Server Error" }] });
   }
 });
+
+// GET EXPENSE PAYMENT TYPES FOR USER
+router.get("/paytype", checkAuth, async (req, res) => {
+  try {
+    const categories = await Category.find({ user: req.user.id });
+    res.json(categories[0]);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ errors: [{ msg: "Server Error" }] });
+  }
+});
+
 
 module.exports = router;

@@ -2,18 +2,31 @@ import axios from "axios";
 
 const getUserCategoriesAPI = async token => {
   const url = "/api/users/categories";
-
   return await axios
     .get(url, { headers: { "x-auth-token": token } })
     .then(response => {
-      return { success: response.data };
+      return { success: response.data.categories };
     })
     .catch(error => {
       return { error };
     });
 };
 
-const updateUserCategoriesAPI = async (listData, token) => {
+const getUserPayTypesAPI = async token => {
+    const url = "/api/users/paytype";
+    return await axios
+      .get(url, { headers: { "x-auth-token": token } })
+      .then(response => {
+        return { success: response.data.categories };
+      })
+      .catch(error => {
+        return { error };
+      });
+  };
+
+
+
+  const updateUserCategoriesAPI = async (listData, token) => {
   const data = JSON.stringify(listData);
   const url = `/api/users/categories/${listData._id}`;
   const config = {
