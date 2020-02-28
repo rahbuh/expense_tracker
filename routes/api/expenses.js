@@ -53,7 +53,7 @@ router.post(
     ]
   ],
   async (req, res) => {
-    const errors = validationResult(req); //check for input errors
+    const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
@@ -77,7 +77,71 @@ router.post(
       res.json({ success: expense });
     } catch (err) {
       console.error(err.message);
-      res.status(500).json({ errors: [{ msg: "Server Error" }] });
+      res
+        .status(500)
+        .json({ errors: [{ msg: "Server Error: Unable to Save" }] });
+    }
+  }
+);
+
+// UPDATE A USER EXPENSE
+router.put(
+  "/:id",
+  [
+    checkAuth,
+    [
+      check("payee", "Payee is required")
+        .not()
+        .isEmpty(),
+      check("date", "Date is required")
+        .not()
+        .isEmpty(),
+      check("amount", "Amount is required")
+        .not()
+        .isEmpty()
+    ]
+  ],
+  async (req, res) => {
+    const errors = validationResult(req); //check for input errors
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      const expense = await Expense.findById(req.params.id);
+      if (!expense) {
+        return res
+          .status(404)
+          .json({ errors: [{ msg: "Error: Expense not found" }] });
+      }
+
+      if (expense.user.toString() !== req.user.id) {
+        return res.status(401).json({ msg: "Authorization failed" });
+      }
+
+      const update = {
+        payee: req.body.payee,
+        date: req.body.date,
+        amount: req.body.amount,
+        method: req.body.method,
+        category: req.body.category,
+        memo: req.body.memo,
+        updated: Date.now()
+      };
+
+      const updatedExpense = await expense.updateOne(update);
+
+      res.json({ success: updatedExpense });
+    } catch (err) {
+      console.error(err.message);
+      if (err.kind === "ObjectId") {
+        return res
+          .status(404)
+          .json({ errors: [{ msg: "Error: Expense not found" }] });
+      }
+      res
+        .status(500)
+        .json({ errors: [{ msg: "Server Error: Unable to Update" }] });
     }
   }
 );
@@ -88,7 +152,7 @@ router.delete("/:id", checkAuth, async (req, res) => {
     const expense = await Expense.findById(req.params.id);
 
     if (!expense) {
-      return res.status(404).json({ msg: "Expense not found" });
+      return res.status(404).json({ errors: [{ msg: "Expense not found" }] });
     }
 
     if (expense.user.toString() !== req.user.id) {
@@ -98,40 +162,6 @@ router.delete("/:id", checkAuth, async (req, res) => {
     await expense.remove();
 
     res.json({ msg: "Expense deleted" });
-  } catch (err) {
-    console.error(err.message);
-    if (err.kind === "ObjectId") {
-      return res.status(404).json({ msg: "Expense not found" });
-    }
-    res.status(500).json({ errors: [{ msg: "Server Error" }] });
-  }
-});
-
-// UPDATE A USER EXPENSE
-router.put("/:id", checkAuth, async (req, res) => {
-  try {
-    const expense = await Expense.findById(req.params.id);
-    if (!expense) {
-      return res.status(404).json({ msg: "Expense not found" });
-    }
-
-    if (expense.user.toString() !== req.user.id) {
-      return res.status(401).json({ msg: "User not authorized" });
-    }
-
-    const update = {
-      payee: req.body.payee,
-      date: req.body.date,
-      amount: req.body.amount,
-      method: req.body.method,
-      category: req.body.category,
-      memo: req.body.memo,
-      updated: Date.now()
-    };
-
-    await expense.updateOne(update);
-
-    res.json({ msg: "Expense updated" });
   } catch (err) {
     console.error(err.message);
     if (err.kind === "ObjectId") {

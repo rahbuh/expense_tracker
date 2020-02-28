@@ -39,7 +39,12 @@ const postExpenseAPI = async (inputData, token) => {
       return response.data;
     })
     .catch(error => {
-      return error.response.data;
+      const status = error.response.status;
+      if (status !== 400 && status !== 500) {
+        return { status: error.response.status };
+      } else {
+        return error.response.data;
+      }
     });
 };
 
@@ -58,7 +63,12 @@ const updateExpenseAPI = async (inputData, token) => {
       return response.data;
     })
     .catch(error => {
-      return error.response.data;
+      const status = error.response.status;
+      if (status !== 400 && status !== 404 && status !== 500) {
+        return { status: error.response.status };
+      } else {
+        return error.response.data;
+      }
     });
 };
 

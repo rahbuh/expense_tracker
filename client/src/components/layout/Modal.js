@@ -4,7 +4,7 @@ import { Button } from "./Button";
 import { postExpenseAPI, updateExpenseAPI } from "../../api/userExpense";
 
 export const Modal = props => {
-  const token = props.token;   // WILL BE SET BY LOGIN
+  const token = props.token; // WILL BE SET BY LOGIN
 
   const [inputData, setInputData] = useState({ ...props.expenseData });
   const [errorMsg, setErrorMsg] = useState([]);
@@ -13,29 +13,27 @@ export const Modal = props => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
 
-  const saveExpense = e => {
+  const saveExpense = async e => {
     e.preventDefault();
-    if (props.type.modal === "new") {
-      postExpenseAPI(inputData, token).then(response => {
-        const { success, errors } = response;
+    const handleResponse = result => {
+      if (result.success) {
+        // UPDATE EXPENSES
+        props.close();
+      }
+      if (result.errors) {
+        setErrorMsg(result.errors);
+      }
+      if (result.status) {
+        console.log("Post Error Status: ", result.status);
+      }
+    };
 
-        if (success) {
-          // UPDATE EXPENSE LIST
-          props.close();
-        }
-        if (errors) {
-          setErrorMsg(errors);
-        }
-      });
+    if (props.type.modal === "new") {
+      handleResponse(await postExpenseAPI(inputData, token));
     }
 
     if (props.type.modal === "edit") {
-      updateExpenseAPI(inputData, token).then(response => {
-        console.log(response);
- 
-      });
-      console.log("Expense Updated");
-      props.close();
+      handleResponse(await updateExpenseAPI(inputData, token));
     }
     // IF USER NOT VALID, REDIRECT TO LOGIN PAGE
   };
