@@ -51,7 +51,7 @@ router.post(
       res.json({ success: true });
     } catch (err) {
       console.error(err.message);
-      res.status(500).json({ errors: [{ msg: "Server Error" }] });
+      res.status(500).json({ errors: [{ msg: "Server Error: Unable to register" }] });
     }
   }
 );
@@ -63,7 +63,7 @@ router.get("/categories", checkAuth, async (req, res) => {
     res.json(categories[0]);
   } catch (err) {
     console.error(err.message);
-    res.status(500).json({ errors: [{ msg: "Server Error" }] });
+    res.status(500).json({ errors: [{ msg: "Server Error: Unable to load Categories" }] });
   }
 });
 
@@ -74,9 +74,8 @@ router.get("/paytype", checkAuth, async (req, res) => {
     res.json(paytypes[0]);
   } catch (err) {
     console.error(err.message);
-    res.status(500).json({ errors: [{ msg: "Server Error" }] });
+    res.status(500).json({ errors: [{ msg: "Server Error: Unable to load Pay Types" }] });
   }
 });
-
 
 module.exports = router;

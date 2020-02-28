@@ -6,10 +6,14 @@ const formatDisplayDate = date => {
 
 const formatInputDate = date => {
   return moment(date).format("YYYY-MM-DD");
-}
+};
 
 const formatDisplayAmount = amount => {
-  return amount.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-}
+  return amount.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+};
 
-export { formatDisplayDate, formatInputDate, formatDisplayAmount };
+export {
+  formatDisplayDate,
+  formatInputDate,
+  formatDisplayAmount
+};

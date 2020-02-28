@@ -17,7 +17,7 @@ export const Modal = props => {
     e.preventDefault();
     const handleResponse = result => {
       if (result.success) {
-        props.getExpenses();
+        props.updateExpenses();
         props.close();
       }
       if (result.errors) {

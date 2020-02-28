@@ -5,10 +5,15 @@ const getAllExpensesAPI = async token => {
   return await axios
     .get(url, { headers: { "x-auth-token": token } })
     .then(response => {
-      return { success: response.data };
+      return response.data;
     })
     .catch(error => {
-      return { error };
+      const status = error.response.status;
+      if (status !== 400 && status !== 404 && status !== 500) {
+        return { status: error.response.status };
+      } else {
+        return error.response.data;
+      }
     });
 };
 
@@ -17,10 +22,15 @@ const getSingleExpenseAPI = async (id, token) => {
   return await axios
     .get(url, { headers: { "x-auth-token": token } })
     .then(response => {
-      return { success: response.data };
+      return response.data;;
     })
     .catch(error => {
-      return { error };
+      const status = error.response.status;
+      if (status !== 400 && status !== 404 && status !== 500) {
+        return { status: error.response.status };
+      } else {
+        return error.response.data;
+      }
     });
 };
 
@@ -80,7 +90,12 @@ const deleteExpenseAPI = async (id, token) => {
       return { success: response.data };
     })
     .catch(error => {
-      return { error };
+      const status = error.response.status;
+      if (status !== 400 && status !== 404 && status !== 500) {
+        return { status: error.response.status };
+      } else {
+        return error.response.data;
+      }
     });
 };
 

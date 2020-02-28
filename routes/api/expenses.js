@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const checkAuth = require("../../middleware/check-auth");
+const formatInputAmount = require("../../helpers/format")
 const User = require("../../models/User");
 const Expense = require("../../models/Expense");
 
@@ -9,7 +10,7 @@ const Expense = require("../../models/Expense");
 router.get("/", checkAuth, async (req, res) => {
   try {
     const expenses = await Expense.find({ user: req.user.id });
-    res.json(expenses);
+    res.json({ success: expenses });
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ errors: [{ msg: "Server Error" }] });
@@ -20,16 +21,15 @@ router.get("/", checkAuth, async (req, res) => {
 router.get("/:id", checkAuth, async (req, res) => {
   try {
     const expense = await Expense.findById(req.params.id);
-
     if (!expense) {
-      return res.status(404).json({ msg: "Expense not found" });
+      return res.status(404).json({ errors: [{ msg: "Error: Expense not found" }] });
     }
 
-    res.json(expense);
+    res.json({ success: expense });
   } catch (err) {
     console.error(err.message);
     if (err.kind === "ObjectId") {
-      return res.status(404).json({ msg: "Expense not found" });
+      return res.status(404).json({ errors: [{ msg: "Error: Expense not found" }] });
     }
     res.status(500).json({ errors: [{ msg: "Server Error" }] });
   }
@@ -60,12 +60,11 @@ router.post(
 
     try {
       const user = await User.findById(req.user.id).select("-password");
-      const amount = String(parseFloat(req.body.amount).toFixed(2));
 
       const newExpense = new Expense({
         payee: req.body.payee,
         date: req.body.date,
-        amount,
+        amount: formatInputAmount(req.body.amount),
         method: req.body.method,
         category: req.body.category,
         memo: req.body.memo,
@@ -122,7 +121,7 @@ router.put(
       const update = {
         payee: req.body.payee,
         date: req.body.date,
-        amount: req.body.amount,
+        amount: formatInputAmount(req.body.amount),
         method: req.body.method,
         category: req.body.category,
         memo: req.body.memo,
@@ -152,22 +151,28 @@ router.delete("/:id", checkAuth, async (req, res) => {
     const expense = await Expense.findById(req.params.id);
 
     if (!expense) {
-      return res.status(404).json({ errors: [{ msg: "Expense not found" }] });
+      return res
+        .status(404)
+        .json({ errors: [{ msg: "Error: Expense not found" }] });
     }
 
     if (expense.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: "User not authorized" });
     }
 
-    await expense.remove();
+    const deleteExpense = await expense.remove();
 
-    res.json({ msg: "Expense deleted" });
+    res.json({ success: deleteExpense });
   } catch (err) {
     console.error(err.message);
     if (err.kind === "ObjectId") {
-      return res.status(404).json({ msg: "Expense not found" });
+      return res
+        .status(404)
+        .json({ errors: [{ msg: "Error: Expense not found" }] });
     }
-    res.status(500).json({ errors: [{ msg: "Server Error" }] });
+    res
+      .status(500)
+      .json({ errors: [{ msg: "Server Error: Unable to Delete" }] });
   }
 });
 
