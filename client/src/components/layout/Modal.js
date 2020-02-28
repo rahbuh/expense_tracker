@@ -17,13 +17,14 @@ export const Modal = props => {
     e.preventDefault();
     const handleResponse = result => {
       if (result.success) {
-        // UPDATE EXPENSES
+        props.getExpenses();
         props.close();
       }
       if (result.errors) {
         setErrorMsg(result.errors);
       }
       if (result.status) {
+        // VALIDATION ERROR, REDIRECT TO LOGIN PAGE
         console.log("Post Error Status: ", result.status);
       }
     };
@@ -35,7 +36,6 @@ export const Modal = props => {
     if (props.type.modal === "edit") {
       handleResponse(await updateExpenseAPI(inputData, token));
     }
-    // IF USER NOT VALID, REDIRECT TO LOGIN PAGE
   };
 
   return (

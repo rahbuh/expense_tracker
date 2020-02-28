@@ -37,7 +37,7 @@ router.post(
 
       user = new User({ name, email, password });
 
-      // create default categories and pay types for user
+      // CREATE DEFAULT CATEGORIES AND PAY TYPES FOR NEW USER
       categories = new Category({user: user.id, categories: [...defaultList.categories]})
       payType = new PayType({user: user.id, payType: [...defaultList.methods]})
 

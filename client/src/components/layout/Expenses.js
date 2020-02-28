@@ -90,7 +90,7 @@ const Expenses = () => {
       });
       setShowModal(true);
     }
-    // IF ERROR, REDIRECT TO LOGIN PAGE
+    // VALIDATION ERROR, REDIRECT TO LOGIN PAGE
   };
 
   const deleteExpense = async id => {
@@ -98,7 +98,7 @@ const Expenses = () => {
     if (deletedExpense.success) {
       getExpenses();
     }
-    // IF ERROR, REDIRECT TO LOGIN PAGE
+    // VALIDATION ERROR, REDIRECT TO LOGIN PAGE
   };
 
   const closeModal = () => {
@@ -142,12 +142,13 @@ const Expenses = () => {
       </div>
       {showModal ? (
         <Modal
+          token={token}
           type={modalType}
           expenseData={expenseData}
-          close={closeModal}
-          token={token}
           categories={userCategories}
           paytype={userPayType}
+          close={closeModal}
+          getExpenses={getExpenses}
         />
       ) : null}
     </Fragment>
