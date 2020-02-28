@@ -358,7 +358,9 @@ button {
 }
 
 .expense-title {
+  font-size: .8rem;
   font-weight: bold;
+  padding: 2px 0;
 }
 
 .expense-data {
@@ -367,6 +369,10 @@ button {
   background-color: #fff;
   color: #1b1b1b;
   padding: 0 0.5rem;
+}
+
+.row-secondary {
+  /* display: none; */
 }
 
 .date,
@@ -379,26 +385,26 @@ button {
   margin-right: 1rem;
 }
 
-.date .expense-data {
+.date .expense-data,
+.amount .expense-data {
   width: 6.5em;
+}
+
+.date .expense-data {
   text-align: center;
 }
 
-.payee .expense-data {
-  width: 15em;
-}
-
 .amount .expense-data {
-  width: 6.5em;
   text-align: right;
 }
 
-.type .expense-data {
-  width: 8em;
+.payee .expense-data {
+  width: 12em;
 }
 
+.type .expense-data,
 .category .expense-data {
-  width: 12em;
+  width: 10em;
 }
 
 .memo .expense-data {

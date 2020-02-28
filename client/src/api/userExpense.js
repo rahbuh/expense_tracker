@@ -2,7 +2,6 @@ import axios from "axios";
 
 const getAllExpensesAPI = async token => {
   const url = "/api/expenses";
-
   return await axios
     .get(url, { headers: { "x-auth-token": token } })
     .then(response => {
@@ -15,7 +14,6 @@ const getAllExpensesAPI = async token => {
 
 const getSingleExpenseAPI = async (id, token) => {
   const url = `/api/expenses/${id}`;
-
   return await axios
     .get(url, { headers: { "x-auth-token": token } })
     .then(response => {
@@ -35,7 +33,6 @@ const postExpenseAPI = async (inputData, token) => {
       "x-auth-token": token
     }
   };
-
   return await axios
     .post(url, data, config)
     .then(response => {
@@ -55,7 +52,6 @@ const updateExpenseAPI = async (inputData, token) => {
       "x-auth-token": token
     }
   };
-
   return await axios
     .put(url, data, config)
     .then(response => {
@@ -68,7 +64,6 @@ const updateExpenseAPI = async (inputData, token) => {
 
 const deleteExpenseAPI = async (id, token) => {
   const url = `/api/expenses/${id}`;
-
   return await axios
     .delete(url, { headers: { "x-auth-token": token } })
     .then(response => {

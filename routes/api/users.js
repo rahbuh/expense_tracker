@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const checkAuth = require("../../middleware/check-auth");
-const defaultList = require("../../helpers/lists");
+const defaultList = require("../../config/lists");
 
 const User = require("../../models/User");
 const Category = require("../../models/Category");

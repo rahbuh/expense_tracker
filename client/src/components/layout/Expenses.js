@@ -34,43 +34,28 @@ const Expenses = () => {
     getPayTypes();
   }, []);
 
-  const getExpenses = () => {
-    getAllExpensesAPI(token).then(response => {
-      const { success, error } = response;
-      if (success) {
-        setExpenses(success.map(expense => ({ ...expense })));
-      }
-      if (error) {
-        // IF ERROR, REDIRECT TO LOGIN PAGE
-        console.log("Error returned: ", error);
-      }
-    });
+  const getExpenses = async () => {
+    const expenses = await getAllExpensesAPI(token);
+    if (expenses.success) {
+      setExpenses(expenses.success.map(expense => ({ ...expense })));
+    }
+    // IF ERROR, REDIRECT TO LOGIN PAGE
   };
 
-  const getCategories = () => {
-    getUserCategoriesAPI(token).then(response => {
-      const { success, error } = response;
-      if (success) {
-        setUserCategories([...success]);
-      }
-      if (error) {
-        // IF ERROR, REDIRECT TO LOGIN PAGE
-        console.log("Error returned: ", error);
-      }
-    });
+  const getCategories = async () => {
+    const categories = await getUserCategoriesAPI(token);
+    if (categories.success) {
+      setUserCategories([...categories.success]);
+    }
+    // IF ERROR, REDIRECT TO LOGIN PAGE
   };
 
-  const getPayTypes = () => {
-    getUserPayTypesAPI(token).then(response => {
-      const { success, error } = response;
-      if (success) {
-        setUserPayType([...success]);
-      }
-      if (error) {
-        // IF ERROR, REDIRECT TO LOGIN PAGE
-        console.log("Error returned: ", error);
-      }
-    });
+  const getPayTypes = async () => {
+    const paytype = await getUserPayTypesAPI(token);
+    if (paytype.success) {
+      setUserPayType([...paytype.success]);
+    }
+    // IF ERROR, REDIRECT TO LOGIN PAGE
   };
 
   const addNewExpense = () => {
@@ -83,42 +68,37 @@ const Expenses = () => {
     setShowModal(true);
   };
 
-  const editExpense = id => {
-    getSingleExpenseAPI(id, token).then(response => {
-      const expense = response.success;
-      if (expense) {
-        const update = {
-          _id: expense._id,
-          payee: expense.payee,
-          date: formatInputDate(expense.date),
-          amount: parseFloat(expense.amount),
-          method: expense.method,
-          category: expense.category,
-          memo: expense.memo
-        };
+  const editExpense = async id => {
+    const response = await getSingleExpenseAPI(id, token);
+    const expense = response.success;
+    if (expense) {
+      const update = {
+        _id: expense._id,
+        payee: expense.payee,
+        date: formatInputDate(expense.date),
+        amount: parseFloat(expense.amount),
+        method: expense.method,
+        category: expense.category,
+        memo: expense.memo
+      };
 
-        setExpenseData(prevState => ({ ...prevState, ...update }));
-        setModalType({
-          title: "Edit Expense",
-          btnName: "Update",
-          modal: "edit"
-        });
-        setShowModal(true);
-      }
-    });
+      setExpenseData(prevState => ({ ...prevState, ...update }));
+      setModalType({
+        title: "Edit Expense",
+        btnName: "Update",
+        modal: "edit"
+      });
+      setShowModal(true);
+    }
+    // IF ERROR, REDIRECT TO LOGIN PAGE
   };
 
-  const deleteExpense = id => {
-    deleteExpenseAPI(id, token).then(response => {
-      console.log(response);
-      // const { success, errors } = response;
-      // if (success) {
-      //   console.log(success)
-      // }
-      // if (errors) {
-      //   console.log(errors);
-      // }
-    });
+  const deleteExpense = async id => {
+    const deletedExpense = await deleteExpenseAPI(id, token);
+    if (deletedExpense.success) {
+      getExpenses();
+    }
+    // IF ERROR, REDIRECT TO LOGIN PAGE
   };
 
   const closeModal = () => {
