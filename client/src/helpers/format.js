@@ -1,11 +1,11 @@
 import moment from "moment";
 
 const formatDisplayDate = date => {
-  return moment(date).format("MM/DD/YYYY");
+  return moment.utc(date).format("MM/DD/YYYY");
 };
 
 const formatInputDate = date => {
-  return moment(date).format("YYYY-MM-DD");
+  return moment.utc(date).format("YYYY-MM-DD");
 };
 
 const formatDisplayAmount = amount => {
