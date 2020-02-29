@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import { ExpenseCard } from "./ExpenseCard";
 import { Button } from "./Button";
 import { Modal } from "./Modal";
+import Session from "../../api/Session";
 import { formatInputDate } from "../../helpers/format";
 import {
   getAllExpensesAPI,
@@ -10,9 +11,8 @@ import {
 } from "../../api/userExpense";
 import { getUserCategoriesAPI, getUserPayTypesAPI } from "../../api/userLists";
 
-import { token } from "../../helpers/token"; // WILL BE SET BY LOGIN
-
 const Expenses = () => {
+  const [token] = useState(Session.checkSession());
   const [userExpenses, setExpenses] = useState([]);
   const [userCategories, setUserCategories] = useState([]);
   const [userPayType, setUserPayType] = useState([]);
@@ -29,33 +29,30 @@ const Expenses = () => {
   });
 
   useEffect(() => {
-    (async function getCategories() {
-      const categories = await getUserCategoriesAPI(token);
-      if (categories.success) {
-        setUserCategories([...categories.success]);
-      } else {
-        handleErrors(categories);
-      }
-    }());
-
-    (async function getPayTypes() {
-      const paytype = await getUserPayTypesAPI(token);
-      if (paytype.success) {
-        setUserPayType([...paytype.success]);
-      } else {
-        handleErrors(paytype);
-      }
-    }());
-
-    (async function getExpenses() {
+    async function loadUserData() {
       const expenses = await getAllExpensesAPI(token);
+      const categories = await getUserCategoriesAPI(token);
+      const paytype = await getUserPayTypesAPI(token);
+
       if (expenses.success) {
         setExpenses(expenses.success.map(expense => ({ ...expense })));
       } else {
         handleErrors(expenses);
       }
-    }());
-  }, []);
+      if (categories.success) {
+        setUserCategories([...categories.success]);
+      } else {
+        handleErrors(categories);
+      }
+      if (paytype.success) {
+        setUserPayType([...paytype.success]);
+      } else {
+        handleErrors(paytype);
+      }
+    }
+
+    loadUserData();
+  }, [token]);
 
   const handleErrors = result => {
     if (result.errors) {
@@ -68,14 +65,14 @@ const Expenses = () => {
     }
   };
 
-  async function updateExpenses() {
+  const updateExpenses = async () => {
     const expenses = await getAllExpensesAPI(token);
     if (expenses.success) {
       setExpenses(expenses.success.map(expense => ({ ...expense })));
     } else {
       handleErrors(expenses);
     }
-  }
+  };
 
   const addNewExpense = () => {
     // SET ALL FIELDS TO EMPTY

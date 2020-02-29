@@ -1,98 +1,83 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import authenticate from "../../api/authUser";
+import Session from "../../api/Session";
 import { Alert } from "./Alert";
 
-class Login extends Component {
-  state = {
+const Login = props => {
+  const [login, setLogin] = useState({
     email: "",
-    password: "",
-    token: "",
-    errors: [],
-    successMsg: ""
+    password: ""
+  });
+  const [errors, setErrors] = useState([]);
+  const [registerSuccess, setRegisterSuccess] = useState(props.location.state);
+
+  const handleChange = e => {
+    setLogin({ ...login, [e.target.name]: e.target.value });
   };
 
-  componentDidMount() {
-    const successMsg = this.props.location.state;
-    if (successMsg) {
-      this.setState({
-        successMsg: successMsg
-      });
-    }
-  }
-
-  handleChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-
-  handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    const { email, password } = this.state;
-
+    const { email, password } = login;
     if (email && password) {
-      authenticate(email, password).then(response => {
-        const { token, errors } = response;
-        if (token) {
-          this.setState({ token });
-          this.props.history.push("/user/expenses");
-        }
-        if (errors) {
-          this.setState({ successMsg: "", errors });
-        }
-      });
+      const { token, errors } = await authenticate(email, password);
+      setRegisterSuccess("");
+
+      if (token) {
+        Session.setSession(token);
+        props.history.push("/user/expenses");  
+      }
+      if (errors) {
+        setErrors(errors);
+      }
     } else {
-      this.setState({
-        successMsg: "",
-        errors: [{ msg: "All fields are required" }]
-      });
+      setErrors([{ msg: "All fields are required" }]);
     }
   };
 
-  render() {
-    const { email, password, errors, successMsg: success } = this.state;
-    const errorMsg = errors.map((err, index) => (
-      <Alert key={index} className={"alert alert-danger"} message={err.msg} />
-    ));
+  const errorMsg = errors.map((err, index) => (
+    <Alert key={index} className={"alert alert-danger"} message={err.msg} />
+  ));
 
-    return (
-      <div className="wrapper">
-        <h1 className="large text-golden">Sign In</h1>
-        <p className="lead">
-          <i className="fas fa-user"></i> Sign into Your Account
-        </p>
-        {errorMsg}
-        {success ? (
-          <Alert className={"alert alert-success"} message={success.msg} />
-        ) : null}
-        <form className="form" onSubmit={this.handleSubmit} noValidate>
-          <div className="form-group">
-            <input
-              type="email"
-              placeholder="Email Address"
-              name="email"
-              value={email}
-              onChange={this.handleChange}
-              autoComplete="on"
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="password"
-              placeholder="Password"
-              name="password"
-              value={password}
-              onChange={this.handleChange}
-              autoComplete="off"
-            />
-          </div>
-          <input type="submit" className="btn btn-standard" value="Login" />
-        </form>
-        <p className="my-1">
-          Don't have an account? <Link to="/register">Sign Up</Link>
-        </p>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="wrapper">
+      <h1 className="large text-golden">Sign In</h1>
+      <p className="lead">
+        <i className="fas fa-user"></i> Sign into Your Account
+      </p>
+      {errorMsg}
+      {registerSuccess ? (
+        <Alert
+          className={"alert alert-success"}
+          message={registerSuccess.msg}
+        />
+      ) : null}
+      <form className="form" onSubmit={handleSubmit} noValidate>
+        <div className="form-group">
+          <input
+            type="email"
+            placeholder="Email Address"
+            name="email"
+            onChange={handleChange}
+            autoComplete="on"
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            onChange={handleChange}
+            autoComplete="off"
+          />
+        </div>
+        <input type="submit" className="btn btn-standard" value="Login" />
+      </form>
+      <p className="my-1">
+        Don't have an account? <Link to="/register">Sign Up</Link>
+      </p>
+    </div>
+  );
+};
 
 export default Login;

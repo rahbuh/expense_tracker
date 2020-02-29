@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const authenticate = (email, password) => {
+const authenticate = async (email, password) => {
   const data = JSON.stringify({ email, password });
   const url = "/api/auth";
   const config = {
@@ -9,7 +9,7 @@ const authenticate = (email, password) => {
     }
   };
 
-  return axios
+  return await axios
     .post(url, data, config)
     .then(response => {
       return response.data
