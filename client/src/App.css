@@ -290,6 +290,10 @@ button {
   margin-right: 0.6rem;
 }
 
+#home{
+  /* width: 50px */
+}
+
 /* Overlay */
 .dark-overlay {
   background-color: rgba(0, 0, 0, 0.8);
