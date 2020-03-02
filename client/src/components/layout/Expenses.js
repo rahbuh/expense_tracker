@@ -2,17 +2,12 @@ import React, { Fragment, useState, useEffect } from "react";
 import { ExpenseCard } from "./ExpenseCard";
 import { Button } from "./Button";
 import { Modal } from "./Modal";
-import Session from "../../api/Session";
 import { formatInputDate } from "../../helpers/format";
-import {
-  getAllExpensesAPI,
-  getSingleExpenseAPI,
-  deleteExpenseAPI
-} from "../../api/userExpense";
+import { getAllExpensesAPI, getSingleExpenseAPI, deleteExpenseAPI } from "../../api/userExpense";
 import { getUserCategoriesAPI, getUserPayTypesAPI } from "../../api/userLists";
+import Session from "../../helpers/session";
 
 const Expenses = () => {
-  const [token] = useState(Session.checkSession());
   const [userExpenses, setExpenses] = useState([]);
   const [userCategories, setUserCategories] = useState([]);
   const [userPayType, setUserPayType] = useState([]);
@@ -29,6 +24,7 @@ const Expenses = () => {
   });
 
   useEffect(() => {
+    const token = Session.checkSession()
     async function loadUserData() {
       const expenses = await getAllExpensesAPI(token);
       const categories = await getUserCategoriesAPI(token);
@@ -52,7 +48,7 @@ const Expenses = () => {
     }
 
     loadUserData();
-  }, [token]);
+  }, []);
 
   const handleErrors = result => {
     if (result.errors) {
@@ -66,6 +62,7 @@ const Expenses = () => {
   };
 
   const updateExpenses = async () => {
+    const token = Session.checkSession()
     const expenses = await getAllExpensesAPI(token);
     if (expenses.success) {
       setExpenses(expenses.success.map(expense => ({ ...expense })));
@@ -86,6 +83,7 @@ const Expenses = () => {
   };
 
   const editExpense = async id => {
+    const token = Session.checkSession()
     const response = await getSingleExpenseAPI(id, token);
     if (response.success) {
       setExpenseData(prevState => ({
@@ -111,6 +109,7 @@ const Expenses = () => {
   };
 
   const deleteExpense = async id => {
+    const token = Session.checkSession()
     const deletedExpense = await deleteExpenseAPI(id, token);
     if (deletedExpense.success) {
       updateExpenses();
@@ -160,13 +159,12 @@ const Expenses = () => {
       </div>
       {showModal ? (
         <Modal
-          token={token}
           type={modalType}
           expenseData={expenseData}
           categories={userCategories}
           paytype={userPayType}
-          close={closeModal}
           updateExpenses={updateExpenses}
+          close={closeModal}
         />
       ) : null}
     </Fragment>

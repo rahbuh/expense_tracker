@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Input, Select } from "./InputFields";
 import { Button } from "./Button";
+import Session from "../../helpers/session"
 import { postExpenseAPI, updateExpenseAPI } from "../../api/userExpense";
 
 export const Modal = props => {
-  const token = props.token; // WILL BE SET BY LOGIN
-
+  const token = Session.checkSession()
   const [inputData, setInputData] = useState({ ...props.expenseData });
   const [errorMsg, setErrorMsg] = useState([]);
 

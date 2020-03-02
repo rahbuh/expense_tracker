@@ -46,7 +46,7 @@ router.post(
           .status(400)
           .json({ errors: [{ msg: "Invalid Credentials" }] });
       }
-
+      
       const payload = {
         user: {
           id: user.id
@@ -59,7 +59,7 @@ router.post(
         { expiresIn: 14400 },
         (err, token) => {
           if (err) throw err;
-          res.json({ token });
+          res.json({ username: user.name, token });
         }
       );
     } catch (err) {
