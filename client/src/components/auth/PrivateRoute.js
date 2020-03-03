@@ -12,7 +12,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
         if (!user.isLoggedIn) {
           return (
             <Redirect
-              to={{ pathname: "/login", state: { from: props.location } }}
+              to={{ pathname: "/login", state: { referer: props.location } }}
             />
           );
         }

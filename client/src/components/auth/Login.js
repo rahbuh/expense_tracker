@@ -3,10 +3,14 @@ import { Link, Redirect } from "react-router-dom";
 import AuthContext from "../../context/auth";
 
 const Login = () => {
-  const {user, alert, handleChange, handleSubmit} = useContext(AuthContext);
-
+  const { user, alert, handleChange, handleSubmit } = useContext(AuthContext);
+  
   if (user.isLoggedIn) {
-    return <Redirect to="/user/expenses" />;
+    return (
+      <Redirect
+        to="/user/expenses"
+      />
+    );
   }
 
   return (
@@ -16,7 +20,6 @@ const Login = () => {
         <i className="fas fa-user"></i> Sign into Your Account
       </p>
       {alert}
-      {/*{success}*/}
       <form className="form" onSubmit={handleSubmit} noValidate>
         <div className="form-group">
           <input

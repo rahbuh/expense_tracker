@@ -10,7 +10,6 @@ import NoPageFound from "./components/layout/NoPageFound";
 import authenticate from "./api/authUser";
 import Session from "./helpers/session";
 import { Alert } from "./components/auth/Alert";
-
 import AuthContext from "./context/auth";
 import "./App.css";
 
@@ -56,10 +55,6 @@ const App = () => {
   const alert = errors.map((err, index) => (
     <Alert key={index} className={"alert alert-danger"} message={err.msg} />
   ));
-
-  const success = (
-    <Alert className={"alert alert-success"} message={"Success!"} />
-  );
 
   return (
     <AuthContext.Provider
