@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Input, Select } from "./InputFields";
 import { Button } from "./Button";
-import Session from "../../helpers/session"
+import Session from "../../helpers/session";
 import { postExpenseAPI, updateExpenseAPI } from "../../api/userExpense";
 
 export const Modal = props => {
-  const token = Session.checkSession()
   const [inputData, setInputData] = useState({});
   const [errorMsg, setErrorMsg] = useState([]);
 
@@ -15,6 +14,7 @@ export const Modal = props => {
 
   const saveExpense = async e => {
     e.preventDefault();
+    const token = Session.checkSession();
     const handleResponse = result => {
       if (result.success) {
         props.updateExpenses();
@@ -39,8 +39,8 @@ export const Modal = props => {
   };
 
   useEffect(() => {
-    setInputData({ ...props.expenseData })
-  }, [props.expenseData])
+    setInputData({ ...props.expenseData });
+  }, [props.expenseData]);
 
   return (
     <div id="Modal" className="modal">

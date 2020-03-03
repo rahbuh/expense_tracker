@@ -25,6 +25,7 @@ const Expenses = () => {
 
   useEffect(() => {
     const token = Session.checkSession()
+    
     async function loadUserData() {
       const expenses = await getAllExpensesAPI(token);
       const categories = await getUserCategoriesAPI(token);
@@ -64,6 +65,7 @@ const Expenses = () => {
   const updateExpenses = async () => {
     const token = Session.checkSession()
     const expenses = await getAllExpensesAPI(token);
+
     if (expenses.success) {
       setExpenses(expenses.success.map(expense => ({ ...expense })));
     } else {
@@ -85,6 +87,7 @@ const Expenses = () => {
   const editExpense = async id => {
     const token = Session.checkSession()
     const response = await getSingleExpenseAPI(id, token);
+
     if (response.success) {
       setExpenseData(prevState => ({
         ...prevState,
@@ -111,6 +114,7 @@ const Expenses = () => {
   const deleteExpense = async id => {
     const token = Session.checkSession()
     const deletedExpense = await deleteExpenseAPI(id, token);
+    
     if (deletedExpense.success) {
       updateExpenses();
     } else {
