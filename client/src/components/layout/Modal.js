@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Input, Select } from "./InputFields";
 import { Button } from "./Button";
 import Session from "../../helpers/session"
@@ -6,7 +6,7 @@ import { postExpenseAPI, updateExpenseAPI } from "../../api/userExpense";
 
 export const Modal = props => {
   const token = Session.checkSession()
-  const [inputData, setInputData] = useState({ ...props.expenseData });
+  const [inputData, setInputData] = useState({});
   const [errorMsg, setErrorMsg] = useState([]);
 
   const handleChange = e => {
@@ -37,6 +37,10 @@ export const Modal = props => {
       handleResponse(await updateExpenseAPI(inputData, token));
     }
   };
+
+  useEffect(() => {
+    setInputData({ ...props.expenseData })
+  }, [props.expenseData])
 
   return (
     <div id="Modal" className="modal">

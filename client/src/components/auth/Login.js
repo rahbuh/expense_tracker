@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { AuthConsumer } from "../context/authContext";
 
-
 const Login = props => {
   return (
     <AuthConsumer>
@@ -13,12 +12,7 @@ const Login = props => {
             <i className="fas fa-user"></i> Sign into Your Account
           </p>
           {context.alert}
-          {/*{registerSuccess ? (
-        <Alert
-          className={"alert alert-success"}
-          message={registerSuccess.msg}
-        />
-      ) : null} */}
+          {/*{context.success}*/}
           <form className="form" onSubmit={context.handleSubmit} noValidate>
             <div className="form-group">
               <input

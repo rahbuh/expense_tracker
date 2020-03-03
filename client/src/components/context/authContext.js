@@ -8,7 +8,6 @@ const { Provider, Consumer } = React.createContext({
 });
 
 const AuthProvider = props => {
-  // const [registerSuccess, setRegisterSuccess] = useState(props.location.state);
   const [errors, setErrors] = useState([]);
   const [login, setLogin] = useState({
     email: "",
@@ -25,7 +24,6 @@ const AuthProvider = props => {
     const { email, password } = login;
     if (email && password) {
       const { username, token, errors } = await authenticate(email, password);
-      //   setRegisterSuccess("");
 
       if (token) {
         Session.setSession(token);
@@ -51,6 +49,8 @@ const AuthProvider = props => {
   const alert = errors.map((err, index) => (
     <Alert key={index} className={"alert alert-danger"} message={err.msg} />
   ));
+
+  const success = <Alert className={"alert alert-success"} message={"Success!"}/>
 
   return (
     <Provider value={{ user, handleChange, handleSubmit, handleLogOut, alert }}>

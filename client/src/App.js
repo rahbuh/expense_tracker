@@ -11,7 +11,7 @@ import { AuthProvider } from "./components/context/authContext";
 
 import "./App.css";
 
-const App = () => {
+const App = (props) => {
   return (
     <AuthProvider>
       <Router>
@@ -20,9 +20,9 @@ const App = () => {
           <div className="container">
             <Switch>
               <Route exact path="/" component={Landing} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/register" component={Register} />
-              <PrivateRoute exact path="/user/expenses" component={Expenses} />
+              <Route path="/login" component={Login} />
+              <Route path="/register" component={Register} />
+              <PrivateRoute path="/user/expenses" component={Expenses} />
               <Route component={NoPageFound} />
             </Switch>
           </div>
