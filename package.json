@@ -1,5 +1,5 @@
 {
-  "name": "expense_tracker2",
+  "name": "expense_tracker",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -7,12 +7,19 @@
     "start": "node server",
     "server": "nodemon server",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rahbuh/expense_tracker.git"
   },
   "author": "Robert Kramer",
   "license": "MIT",
+  "homepage": "https://github.com/rahbuh/expense_tracker#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-validator": "^6.3.1",
     "jsonwebtoken": "^8.5.1",
@@ -22,7 +29,7 @@
   },
   "devDependencies": {
     "concurrently": "^5.1.0",
-    "dotenv": "^8.2.0",
+    "cra-build-watch": "^3.2.0",
     "nodemon": "^2.0.2"
   }
 }
