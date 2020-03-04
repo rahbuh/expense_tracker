@@ -3,11 +3,16 @@ import { ExpenseCard } from "./ExpenseCard";
 import { Button } from "./Button";
 import { Modal } from "./Modal";
 import { formatInputDate } from "../../helpers/format";
-import { getAllExpensesAPI, getSingleExpenseAPI, deleteExpenseAPI } from "../../api/userExpense";
+import {
+  getAllExpensesAPI,
+  getSingleExpenseAPI,
+  deleteExpenseAPI
+} from "../../api/userExpense";
 import { getUserCategoriesAPI, getUserPayTypesAPI } from "../../api/userLists";
 import Session from "../../helpers/session";
 
 const Expenses = () => {
+  const [isLoading, setIsLoading] = useState();
   const [userExpenses, setExpenses] = useState([]);
   const [userCategories, setUserCategories] = useState([]);
   const [userPayType, setUserPayType] = useState([]);
@@ -24,15 +29,17 @@ const Expenses = () => {
   });
 
   useEffect(() => {
-    const token = Session.checkSession()
-    
+    const token = Session.checkSession();
+
     async function loadUserData() {
+      setIsLoading(true);
       const expenses = await getAllExpensesAPI(token);
       const categories = await getUserCategoriesAPI(token);
       const paytype = await getUserPayTypesAPI(token);
 
       if (expenses.success) {
         setExpenses(expenses.success.map(expense => ({ ...expense })));
+        setIsLoading(false);
       } else {
         handleErrors(expenses);
       }
@@ -63,11 +70,13 @@ const Expenses = () => {
   };
 
   const updateExpenses = async () => {
-    const token = Session.checkSession()
+    setIsLoading(true);
+    const token = Session.checkSession();
     const expenses = await getAllExpensesAPI(token);
 
     if (expenses.success) {
       setExpenses(expenses.success.map(expense => ({ ...expense })));
+      setIsLoading(false);
     } else {
       handleErrors(expenses);
     }
@@ -85,9 +94,8 @@ const Expenses = () => {
   };
 
   const editExpense = async id => {
-    const token = Session.checkSession()
+    const token = Session.checkSession();
     const response = await getSingleExpenseAPI(id, token);
-
     if (response.success) {
       setExpenseData(prevState => ({
         ...prevState,
@@ -112,9 +120,9 @@ const Expenses = () => {
   };
 
   const deleteExpense = async id => {
-    const token = Session.checkSession()
+    const token = Session.checkSession();
     const deletedExpense = await deleteExpenseAPI(id, token);
-    
+
     if (deletedExpense.success) {
       updateExpenses();
     } else {
@@ -153,7 +161,9 @@ const Expenses = () => {
             />
           </div>
           <div id="expense-list">
-            {expenseList.length ? (
+            {isLoading ? (
+              <h3>Loading...</h3>
+            ) : expenseList.length ? (
               expenseList
             ) : (
               <h3>You haven't entered any expenses...</h3>
