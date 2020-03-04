@@ -9,7 +9,6 @@ import Expenses from "./components/layout/Expenses";
 import NoPageFound from "./components/layout/NoPageFound";
 import authenticate from "./api/authUser";
 import Session from "./helpers/session";
-import { Alert } from "./components/auth/Alert";
 import AuthContext from "./context/auth";
 import "./App.css";
 
@@ -33,6 +32,8 @@ const App = () => {
 
       if (token) {
         Session.setSession(token);
+        setLogin({ email: "", password: "" });
+        setErrors([])
         setUser({ username, isLoggedIn: true });
       }
       if (errors) {
@@ -52,13 +53,9 @@ const App = () => {
     Session.deleteSession();
   };
 
-  const alert = errors.map((err, index) => (
-    <Alert key={index} className={"alert alert-danger"} message={err.msg} />
-  ));
-
   return (
     <AuthContext.Provider
-      value={{ user, handleChange, handleSubmit, handleLogOut, alert }}
+      value={{ user, handleChange, handleSubmit, handleLogOut, errors }}
     >
       <Router>
         <Fragment>

@@ -1,46 +1,29 @@
 import React, { Fragment, useContext } from "react";
-import { Link } from "react-router-dom";
+import NavbarLeft from "./NavbarLeft";
+import NavbarRight from "./NavbarRight";
 import AuthContext from "../../context/auth";
 
 const Navbar = () => {
-  const {user, handleLogOut} = useContext(AuthContext);
+  const { user, handleLogOut } = useContext(AuthContext);
 
   return (
     <nav className="navbar">
       {user.isLoggedIn ? (
         <Fragment>
-          <div id="home">
-            <Link to="/">
-              <i className="fas fa-home"></i>
-            </Link>
-            <p style={{ color: "#fff" }}>Welcome, {user.username}!</p>
-          </div>
-          <ul>
-            <li>
-              <Link to="/user/expenses">My Expenses</Link>
-            </li>
-            <li>
-              <Link to="/" onClick={handleLogOut}>
-                Log Out
-              </Link>
-            </li>
-          </ul>
+          <NavbarLeft message={`Welcome, ${user.username}!`} />
+          <NavbarRight
+            link1={{ path: "/user/expenses", text: "My Expenses" }}
+            link2={{ path: "/", text: "Log Out" }}
+            logout={handleLogOut}
+          />
         </Fragment>
       ) : (
         <Fragment>
-          <div id="home">
-            <Link to="/">
-              <i className="fas fa-home"></i>
-            </Link>
-          </div>
-          <ul>
-            <li>
-              <Link to="/register">Register</Link>
-            </li>
-            <li>
-              <Link to="/login">Log In</Link>
-            </li>
-          </ul>
+          <NavbarLeft />
+          <NavbarRight
+            link1={{ path: "/register", text: "Register" }}
+            link2={{ path: "/login", text: "Log In" }}
+          />
         </Fragment>
       )}
     </nav>

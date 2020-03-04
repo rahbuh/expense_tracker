@@ -1,17 +1,18 @@
 import React, { useContext } from "react";
 import { Link, Redirect } from "react-router-dom";
 import AuthContext from "../../context/auth";
+import { Alert } from "./Alert";
 
 const Login = () => {
-  const { user, alert, handleChange, handleSubmit } = useContext(AuthContext);
-  
+  const { user, errors, handleChange, handleSubmit } = useContext(AuthContext);
+
   if (user.isLoggedIn) {
-    return (
-      <Redirect
-        to="/user/expenses"
-      />
-    );
+    return <Redirect to="/user/expenses" />;
   }
+
+  const alert = errors.map((error, index) => (
+    <Alert key={index} className={"alert alert-danger"} message={error.msg} />
+  ));
 
   return (
     <div className="wrapper">

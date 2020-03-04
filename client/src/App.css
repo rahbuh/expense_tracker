@@ -1,11 +1,24 @@
-/* Global Styles */
+/* GLOBAL STYLES */
+/* NAVBAR */
+/* REGISTER AND LOGIN */
+/* LANDING PAGE */
+/* EXPENSES PAGE */
+/* EXPENSE CARD */
+/* EXPENSE FIELD */
+/* BUTTONS */
+/* FORMS */
+/* MODAL */
+/* TEXT STYLES*/
+/* PADDING */
+/* MARGIN */
+
+/* GLOBAL STYLES */
 :root {
   --primary-color: #17a2b8;
   --dark-color: #343a40;
   --light-color: #f4f4f4;
   --danger-color: #dc3545;
   --success-color: #28a745;
-
   --dark-green: #0a3409;
   --light-green: #a0d676;
   --golden: #fba90a;
@@ -50,214 +63,7 @@ ul {
   overflow: hidden;
 }
 
-/* register and login */
-.wrapper {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 1rem;
-}
-
-/* user expenses */
-/* .content {
-  border: 1px solid blue;
-} */
-
-/* Text Styles*/
-.x-large {
-  font-size: 4rem;
-  line-height: 1.2;
-  margin-bottom: 1rem;
-}
-
-.large {
-  font-size: 3rem;
-  line-height: 1.2;
-  margin-bottom: 1rem;
-}
-
-.medium {
-  font-size: 1.75rem;
-  line-height: 1.2;
-}
-
-.bold {
-  font-weight: bold;
-}
-
-.highlight {
-  font-weight: bold;
-  color: var(--golden);
-}
-
-.lead {
-  font-size: 1.25rem;
-  margin-bottom: 2rem;
-}
-
-.text-center {
-  text-align: center;
-}
-
-.text-primary {
-  color: var(--primary-color);
-}
-
-.text-dark {
-  color: var(--dark-color);
-}
-
-.text-golden {
-  color: var(--golden);
-}
-
-/* Padding */
-.p {
-  padding: 0.25rem;
-}
-.p-1 {
-  padding: 1rem;
-}
-.p-2 {
-  padding: 2rem;
-}
-.p-3 {
-  padding: 3rem;
-}
-.py {
-  padding: 0.5rem 0;
-}
-.py-1 {
-  padding: 1rem 0;
-}
-.py-2 {
-  padding: 2rem 0;
-}
-.py-3 {
-  padding: 3rem 0;
-}
-
-/* Margin */
-.m {
-  margin: 0.5rem;
-}
-.m-1 {
-  margin: 1rem;
-}
-.m-2 {
-  margin: 2rem;
-}
-.m-3 {
-  margin: 3rem;
-}
-.my {
-  margin: 0.5rem 0;
-}
-.my-1 {
-  margin: 1rem 0;
-}
-.my-2 {
-  margin: 2rem 0;
-}
-.my-3 {
-  margin: 3rem 0;
-}
-.my-center {
-  margin: 0 auto;
-}
-
-.buttons {
-  display: flex;
-  justify-content: center;
-}
-
-.btn {
-  display: inline-block;
-  border: none;
-  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
-  font-size: 1rem;
-  color: var(--light-color);
-  cursor: pointer;
-  text-align: center;
-  padding: 0.4rem 0;
-  outline: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-
-.btn-standard,
-.btn-modal {
-  background-color: var(--success-color);
-  color: var(--white);
-}
-
-.btn-standard {
-  width: 130px;
-  margin: 0 0.6rem;
-}
-
-.btn-modal {
-  width: 100%;
-}
-
-.btn:hover {
-  background: var(--golden);
-  color: var(--black);
-}
-
-.alert {
-  padding: 0.8rem;
-  margin: 1rem 0;
-  opacity: 0.9;
-  background: var(--light-color);
-  color: #333;
-}
-
-.btn-danger,
-.bg-danger,
-.badge-danger,
-.alert-danger {
-  background: var(--danger-color);
-  color: var(--white);
-}
-
-.btn-success,
-.bg-success,
-.badge-success,
-.alert-success {
-  background: var(--success-color);
-  color: var(--white);
-}
-
-/* Forms */
-.form .form-group {
-  margin: 1.2rem 0;
-}
-
-.form .form-text {
-  display: block;
-  margin-top: 0.3rem;
-  color: var(--medium-gray);
-}
-
-.form input[type="text"],
-.form input[type="email"],
-.form input[type="password"],
-.form input[type="date"],
-.form select,
-.form textarea {
-  display: block;
-  width: 100%;
-  padding: 0.4rem;
-  font-size: 1.2rem;
-  border: 1px solid var(--light-gray);
-}
-
-.form input[type="submit"],
-button {
-  font: inherit;
-}
-
-/* Navbar */
+/* NAVBAR */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -290,23 +96,41 @@ button {
   margin-right: 0.6rem;
 }
 
-#home{
-  /* width: 50px */
+#home {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
 }
 
-/* Overlay */
-.dark-overlay {
-  background-color: rgba(0, 0, 0, 0.8);
-  height: 100%;
+/* REGISTER AND LOGIN */
+.wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 1rem;
 }
 
-/* Landing Page */
+.alert {
+  padding: 0.8rem;
+  margin: 1rem 0;
+  opacity: 0.9;
+}
+
+/* LANDING PAGE */
 .landing {
   position: absolute;
   top: 0;
   left: 0;
-  background: url("../src/assets/img/splash.jpg") no-repeat center center/cover;
+  background: url("../src/assets/img/splash.jpg") no-repeat center/cover;
+  background-size: cover;
+  background-attachment: scroll;
   width: 100%;
+  height: 100%;
+}
+
+.dark-overlay {
+  background-color: rgba(0, 0, 0, 0.8);
   height: 100%;
 }
 
@@ -322,7 +146,12 @@ button {
   text-align: center;
 }
 
-/* Expenses Page */
+.lead {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+/* EXPENSES PAGE */
 #main {
   display: flex;
   flex-wrap: wrap;
@@ -338,15 +167,14 @@ button {
   margin: 1rem 0;
 }
 
-
-/* Expense Card */
+/* EXPENSE CARD */
 .card {
   display: flex;
   flex-wrap: wrap;
   border: 1px solid #e6e6e6;
   background-color: var(--background);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   max-width: 1200px;
   font-size: 1rem;
   margin: 0.5rem 0;
@@ -354,15 +182,16 @@ button {
 }
 
 .card:nth-child(even) {
-  background-color: rgb(253, 203, 104, .5);
+  background-color: rgb(253, 203, 104, 0.5);
 }
 
 .card:hover {
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
+/* EXPENSE FIELD */
 .expense-title {
-  font-size: .8rem;
+  font-size: 0.8rem;
   font-weight: bold;
   padding: 2px 0;
 }
@@ -373,10 +202,6 @@ button {
   background-color: #fff;
   color: #1b1b1b;
   padding: 0 0.5rem;
-}
-
-.row-secondary {
-  /* display: none; */
 }
 
 .date,
@@ -433,7 +258,88 @@ button {
   cursor: pointer;
 }
 
-/* Modal */
+/* BUTTONS */
+.buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.btn {
+  display: inline-block;
+  border: none;
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
+  font-size: 1rem;
+  color: var(--light-color);
+  cursor: pointer;
+  text-align: center;
+  padding: 0.4rem 0;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.btn-standard,
+.btn-modal {
+  background-color: var(--success-color);
+  color: var(--white);
+}
+
+.btn-standard {
+  width: 130px;
+  margin: 0 0.6rem;
+}
+
+.btn-modal {
+  width: 100%;
+}
+
+.btn:hover {
+  background: var(--golden);
+  color: var(--black);
+}
+
+.btn-danger,
+.alert-danger {
+  background: var(--danger-color);
+  color: var(--white);
+}
+
+.btn-success,
+.alert-success {
+  background: var(--success-color);
+  color: var(--white);
+}
+
+/* FORMS */
+.form .form-group {
+  margin: 1.2rem 0;
+}
+
+.form .form-text {
+  display: block;
+  margin-top: 0.3rem;
+  color: var(--medium-gray);
+}
+
+.form input[type="text"],
+.form input[type="email"],
+.form input[type="password"],
+.form input[type="date"],
+.form select,
+.form textarea {
+  display: block;
+  width: 100%;
+  padding: 0.4rem;
+  font-size: 1.2rem;
+  border: 1px solid var(--light-gray);
+}
+
+.form input[type="submit"],
+button {
+  font: inherit;
+}
+
+/* MODAL */
 .modal {
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
@@ -520,31 +426,70 @@ select::-moz-focus-inner {
   -webkit-filter: blur(2px);
 }
 
-/* Mobile Styles */
+/* TEXT STYLES*/
+.x-large {
+  font-size: 4rem;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.large {
+  font-size: 3rem;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.medium {
+  font-size: 1.75rem;
+  line-height: 1.2;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.highlight {
+  font-weight: bold;
+  color: var(--golden);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-primary {
+  color: var(--primary-color);
+}
+
+.text-dark {
+  color: var(--dark-color);
+}
+
+.text-golden {
+  color: var(--golden);
+}
+
+/* PADDING */
+.p-1 {
+  padding: 0.25rem;
+}
+
+/* MARGIN */
+.my {
+  margin: 0.5rem 0;
+}
+.my-1 {
+  margin: 1rem 0;
+}
+
+/* MOBILE STYLES */
 @media (max-width: 700px) {
   .container {
     margin: 6rem 0;
     padding: 0 0.5rem;
   }
 
-  .hide-sm {
-    display: none;
-  }
-
-  /* Text Styles */
-  .x-large {
-    font-size: 3rem;
-  }
-
-  .large {
-    font-size: 2rem;
-  }
-
-  .lead {
-    font-size: 1rem;
-  }
-
-  /* Navbar */
+  /* NAVBAR */
   .navbar {
     display: block;
     text-align: center;
@@ -563,7 +508,13 @@ select::-moz-focus-inner {
     display: none;
   }
 
-  /* Expenses Page */
+  /* LANDING PAGE */
+  .landing-inner {
+    width: 90%;
+    padding-top: 120px;
+  }
+
+  /* EXPENSES PAGE */
   .list-header {
     grid-template-columns: 1fr;
     justify-items: center;
@@ -573,7 +524,17 @@ select::-moz-focus-inner {
     margin: 0 auto;
   }
 
-  /* Modal */
+  /* FORMS */
+  .form input[type="text"],
+  .form input[type="email"],
+  .form input[type="password"],
+  .form input[type="date"],
+  .form select,
+  .form textarea {
+    font-size: 1rem;
+  }
+
+  /* MODAL */
   .modal-content {
     max-width: 300px;
   }
@@ -588,7 +549,7 @@ select::-moz-focus-inner {
   }
 
   .modal-error {
-    font-size: .9rem;
+    font-size: 0.9rem;
   }
 
   .modal input[type="text"],
@@ -605,5 +566,18 @@ select::-moz-focus-inner {
 
   label {
     font-size: 0.8rem;
+  }
+
+  /* TEXT STYLES*/
+  .x-large {
+    font-size: 2rem;
+  }
+
+  .large {
+    font-size: 1.75rem;
+  }
+
+  .lead {
+    font-size: 0.9rem;
   }
 }

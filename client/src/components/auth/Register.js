@@ -25,6 +25,13 @@ const Register = () => {
       if (password === password2) {
         register(username, email, password).then(({ success, errors }) => {
           if (success) {
+            setUser({
+              username: "",
+              email: "",
+              password: "",
+              password2: ""
+            });
+            setErrors([]);
             setRegisterSuccess(true);
           }
           if (errors) {
@@ -39,8 +46,8 @@ const Register = () => {
     }
   };
 
-  const errorMsg = errors.map((err, index) => (
-    <Alert key={index} className={"alert alert-danger"} message={err.msg} />
+  const alert = errors.map((error, index) => (
+    <Alert key={index} className={"alert alert-danger"} message={error.msg} />
   ));
 
   if (registerSuccess) {
@@ -60,7 +67,7 @@ const Register = () => {
       <p className="lead">
         <i className="fas fa-user"></i> Create Your Account
       </p>
-      {errorMsg}
+      {alert}
       <form className="form" onSubmit={handleSubmit} noValidate>
         <div className="form-group">
           <input

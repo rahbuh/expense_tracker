@@ -144,7 +144,7 @@ const Expenses = () => {
       <div id="main" className={showModal ? "is-blurred" : ""}>
         <div className="content">
           <div className="list-header">
-            <p className="medium bold text-golden">Expense List</p>
+            <p className="medium bold text-golden">My Expenses</p>
             <Button
               id="add-expense"
               className="btn btn-standard"
