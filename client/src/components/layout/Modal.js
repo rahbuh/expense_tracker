@@ -24,7 +24,9 @@ export const Modal = props => {
         setErrorMsg(result.errors);
       }
       if (result.status) {
-        // VALIDATION ERROR, REDIRECT TO LOGIN PAGE
+        // VALIDATION ERRORS:
+        // Close modal
+        // Redirect to login
         console.log("Post Error Status: ", result.status);
       }
     };
