@@ -11,24 +11,24 @@ export const ExpenseCard = props => {
       <div className="row row-primary">
         <ExpenseField
           className={"date"}
-          title={"Date: "}
+          title={"Date:"}
           data={formatDisplayDate(date)}
         />
         <ExpenseField
           className={"amount"}
-          title={"Amount: "}
-          data={formatDisplayAmount(amount)}
+          title={"Amount:"}
+          data={"$ " + formatDisplayAmount(amount)}
         />
-        <ExpenseField className={"payee"} title={"Payee: "} data={payee} />
+        <ExpenseField className={"payee"} title={"Payee:"} data={payee} />
       </div>
       <div className="row row-secondary">
-        <ExpenseField className={"type"} title={"Type: "} data={method} />
+        <ExpenseField className={"type"} title={"Type:"} data={method} />
         <ExpenseField
           className={"category"}
-          title={"Category: "}
+          title={"Category:"}
           data={category}
         />
-        <ExpenseField className={"memo"} title={"Memo: "} data={memo} />
+        <ExpenseField className={"memo"} title={"Memo:"} data={memo} />
       </div>
       <div className="row row-icons">
         <i

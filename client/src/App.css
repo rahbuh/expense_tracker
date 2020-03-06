@@ -14,20 +14,21 @@
 
 /* GLOBAL STYLES */
 :root {
-  --primary-color: #17a2b8;
-  --dark-color: #343a40;
-  --light-color: #f4f4f4;
-  --danger-color: #dc3545;
-  --success-color: #28a745;
-  --dark-green: #0a3409;
-  --light-green: #a0d676;
-  --golden: #fba90a;
-  --black: #000000;
   --background: #f2f2f3;
   --biege: #f7ebd4;
-  --white: #fff;
+  --black: #000000;
+  --blue: #0052cc;
+  --danger-color: #dc3545;
+  --dark-color: #343a40;
+  --dark-green: #0a3409;
+  --golden: #fba90a;
+  --light-color: #f4f4f4;
   --light-gray: #ccc;
+  --light-green: #a0d676;
   --medium-gray: #888;
+  --primary-color: #17a2b8;
+  --success-color: #28a745;
+  --white: #fff;
 }
 
 * {
@@ -172,17 +173,16 @@ ul {
   display: flex;
   flex-wrap: wrap;
   border: 1px solid #e6e6e6;
-  background-color: var(--background);
+  background-color: rgb(242, 242, 242, 0.5);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   max-width: 1200px;
-  font-size: 1rem;
   margin: 0.5rem 0;
   padding: 0.5rem;
 }
 
 .card:nth-child(even) {
-  background-color: rgb(253, 203, 104, 0.5);
+  background-color: rgba(255, 238, 203, 0.5);
 }
 
 .card:hover {
@@ -193,14 +193,15 @@ ul {
 .expense-title {
   font-size: 0.8rem;
   font-weight: bold;
-  padding: 2px 0;
+}
+
+.amount > .expense-title {
+  text-align: center;
 }
 
 .expense-data {
-  display: inline-block;
-  border-bottom: 1px solid #ccc;
-  background-color: #fff;
-  color: #1b1b1b;
+  /* display: inline-block; */
+  color: var(--blue);
   padding: 0 0.5rem;
 }
 
@@ -210,7 +211,8 @@ ul {
 .type,
 .category,
 .memo {
-  display: inline-block;
+  display: flex;
+  align-items: center;
   margin-right: 1rem;
 }
 
@@ -241,7 +243,8 @@ ul {
 }
 
 .row-icons {
-  display: inline;
+	display: flex;
+	align-items: center;
 }
 
 .fa-edit {
@@ -518,6 +521,14 @@ select::-moz-focus-inner {
   .list-header {
     grid-template-columns: 1fr;
     justify-items: center;
+  }
+  .date,
+  .amount,
+  .payee,
+  .type,
+  .category,
+  .memo {
+    font-size: 0.9rem;
   }
 
   .row-icons {
