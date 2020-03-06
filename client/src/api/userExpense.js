@@ -22,7 +22,7 @@ const getSingleExpenseAPI = async (id, token) => {
   return await axios
     .get(url, { headers: { "x-auth-token": token } })
     .then(response => {
-      return response.data;;
+      return response.data;
     })
     .catch(error => {
       const status = error.response.status;

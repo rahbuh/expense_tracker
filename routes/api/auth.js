@@ -1,22 +1,9 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
-
-const checkAuth = require("../../middleware/check-auth");
+const createJWT = require("../../helpers/createJWT");
 const User = require("../../models/User");
-
-// USER VALIDATION
-router.get("/", checkAuth, async (req, res) => {
-  try {
-    const user = await User.findById(req.user.id).select("-password");
-    res.json(user);
-  } catch (err) {
-    console.log(err.message);
-    res.status(500).json({ errors: [{ msg: "Server Error" }] });
-  }
-});
 
 // USER LOGIN
 router.post(
@@ -46,22 +33,8 @@ router.post(
           .status(400)
           .json({ errors: [{ msg: "Invalid Credentials" }] });
       }
-      
-      const payload = {
-        user: {
-          id: user.id
-        }
-      };
 
-      jwt.sign(
-        payload,
-        process.env.JWTSECRET,
-        { expiresIn: 14400 },
-        (err, token) => {
-          if (err) throw err;
-          res.json({ username: user.name, token });
-        }
-      );
+      res.json(await createJWT(user.id, user.name));
     } catch (err) {
       console.error(err.message);
       res.status(500).json({ errors: [{ msg: "Server Error" }] });

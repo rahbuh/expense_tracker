@@ -84,9 +84,9 @@ const Expenses = () => {
     setIsLoading(true);
     const token = Session.checkSession();
     const expenses = await getAllExpensesAPI(token);
-
     if (expenses.success) {
       setExpenses(expenses.success.map(expense => ({ ...expense })));
+      Session.setSession(expenses.newtoken);
       setIsLoading(false);
     } else {
       handleErrors(expenses);

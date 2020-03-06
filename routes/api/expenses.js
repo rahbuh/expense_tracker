@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const checkAuth = require("../../middleware/check-auth");
-const formatInputAmount = require("../../helpers/format")
+const formatInputAmount = require("../../helpers/format");
+const createJWT = require("../../helpers/createJWT");
 const User = require("../../models/User");
 const Expense = require("../../models/Expense");
 
@@ -10,7 +11,9 @@ const Expense = require("../../models/Expense");
 router.get("/", checkAuth, async (req, res) => {
   try {
     const expenses = await Expense.find({ user: req.user.id });
-    res.json({ success: expenses });
+    const { token } = await createJWT(req.user.id, req.user.name);
+
+    res.json({ success: expenses, newtoken: token });
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ errors: [{ msg: "Server Error" }] });
@@ -22,14 +25,18 @@ router.get("/:id", checkAuth, async (req, res) => {
   try {
     const expense = await Expense.findById(req.params.id);
     if (!expense) {
-      return res.status(404).json({ errors: [{ msg: "Error: Expense not found" }] });
+      return res
+        .status(404)
+        .json({ errors: [{ msg: "Error: Expense not found" }] });
     }
 
     res.json({ success: expense });
   } catch (err) {
     console.error(err.message);
     if (err.kind === "ObjectId") {
-      return res.status(404).json({ errors: [{ msg: "Error: Expense not found" }] });
+      return res
+        .status(404)
+        .json({ errors: [{ msg: "Error: Expense not found" }] });
     }
     res.status(500).json({ errors: [{ msg: "Server Error" }] });
   }
