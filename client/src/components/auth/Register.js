@@ -35,7 +35,7 @@ const Register = () => {
             setRegisterSuccess(true);
           }
           if (errors) {
-            setErrors({ errors });
+            setErrors(errors);
           }
         });
       } else {
@@ -45,7 +45,6 @@ const Register = () => {
       setErrors([{ msg: "All fields are required" }]);
     }
   };
-
   const alert = errors.map((error, index) => (
     <Alert key={index} className={"alert alert-danger"} message={error.msg} />
   ));

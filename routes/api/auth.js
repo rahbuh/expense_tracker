@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const createJWT = require("../../helpers/createJWT");
+
 const User = require("../../models/User");
 
 // USER LOGIN

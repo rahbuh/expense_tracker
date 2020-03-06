@@ -16,10 +16,10 @@ const register = async (name, email, password) => {
     })
     .catch(error => {
       const status = error.response.status;
-      if (status !== 400 && status !== 500) {
-        return { status: error.response.status };
-      } else {
+      if (status === 400 || status === 422 || status === 500) {
         return error.response.data;
+      } else {
+        return { status: error.response.status };
       }
     });
 };
