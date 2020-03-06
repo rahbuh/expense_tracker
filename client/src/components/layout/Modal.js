@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Input, Select } from "./InputFields";
 import { Button } from "./Button";
 import Session from "../../helpers/session";
 import { postExpenseAPI, updateExpenseAPI } from "../../api/userExpense";
+import AuthContext from "../../context/auth";
 
 export const Modal = props => {
+  const { handleLogOut } = useContext(AuthContext);
+
   const [inputData, setInputData] = useState({});
   const [errorMsg, setErrorMsg] = useState([]);
 
@@ -15,19 +18,18 @@ export const Modal = props => {
   const saveExpense = async e => {
     e.preventDefault();
     const token = Session.checkSession();
-    const handleResponse = result => {
-      if (result.success) {
+    const handleResponse = ({success, errors, status}) => {
+      if (success) {
         props.updateExpenses();
         props.close();
       }
-      if (result.errors) {
-        setErrorMsg(result.errors);
+      if (errors) {
+        setErrorMsg(errors);
       }
-      if (result.status) {
-        // VALIDATION ERRORS:
-        // Close modal
-        // Redirect to login
-        console.log("Post Error Status: ", result.status);
+      if (status) {
+        if (status === 401 || status === 403) {
+          handleLogOut()
+        }
       }
     };
 
@@ -89,6 +91,7 @@ export const Modal = props => {
               name="method"
               options={[...props.paytype.sort()]}
               onChange={handleChange}
+              value={inputData.method}
             />
             <Select
               defaultValue={inputData.category}
@@ -96,6 +99,7 @@ export const Modal = props => {
               name="category"
               options={[...props.categories.sort()]}
               onChange={handleChange}
+              value={inputData.category}
             />
             <Input
               defaultValue={inputData.memo}

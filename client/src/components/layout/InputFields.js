@@ -34,6 +34,7 @@ const Select = props => {
         name={props.name}
         id={props.name}
         onChange={props.onChange}
+        value={props.value}
       >
         <option defaultValue>Select an Option</option>
         {optionList}

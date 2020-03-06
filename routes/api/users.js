@@ -38,8 +38,14 @@ router.post(
       user = new User({ name, email, password });
 
       // CREATE DEFAULT CATEGORIES AND PAY TYPES FOR NEW USER
-      categories = new Category({user: user.id, categories: [...defaultList.categories]})
-      payType = new PayType({user: user.id, payType: [...defaultList.methods]})
+      categories = new Category({
+        user: user.id,
+        categories: [...defaultList.categories]
+      });
+      payType = new PayType({
+        user: user.id,
+        payType: [...defaultList.methods]
+      });
 
       const salt = await bcrypt.genSalt(10);
       user.password = await bcrypt.hash(password, salt);
@@ -51,7 +57,9 @@ router.post(
       res.json({ success: true });
     } catch (err) {
       console.error(err.message);
-      res.status(500).json({ errors: [{ msg: "Server Error: Unable to register" }] });
+      res
+        .status(500)
+        .json({ errors: [{ msg: "Server Error: Unable to register" }] });
     }
   }
 );
@@ -63,7 +71,9 @@ router.get("/categories", checkAuth, async (req, res) => {
     res.json(categories[0]);
   } catch (err) {
     console.error(err.message);
-    res.status(500).json({ errors: [{ msg: "Server Error: Unable to load Categories" }] });
+    res
+      .status(500)
+      .json({ errors: [{ msg: "Server Error: Unable to load Categories" }] });
   }
 });
 
@@ -74,7 +84,9 @@ router.get("/paytype", checkAuth, async (req, res) => {
     res.json(paytypes[0]);
   } catch (err) {
     console.error(err.message);
-    res.status(500).json({ errors: [{ msg: "Server Error: Unable to load Pay Types" }] });
+    res
+      .status(500)
+      .json({ errors: [{ msg: "Server Error: Unable to load Pay Types" }] });
   }
 });
 

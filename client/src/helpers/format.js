@@ -8,12 +8,12 @@ const formatInputDate = date => {
   return moment.utc(date).format("YYYY-MM-DD");
 };
 
-// const formatDisplayAmount = amount => {
-//   return amount.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-// };
+const formatDisplayAmount = amount => {
+  return amount.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+};
 
 export {
   formatDisplayDate,
   formatInputDate,
-  // formatDisplayAmount
+  formatDisplayAmount
 };

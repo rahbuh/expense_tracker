@@ -19,11 +19,18 @@ const App = () => {
     password: ""
   });
 
-  const [user, setUser] = useState({
-    username: "",
-    isLoggedIn: false
-  });
+  const [user, setUser] = useLocalState('user');
 
+  function useLocalState(item) {
+    const [local, setState] = useState(JSON.parse(sessionStorage.getItem(item)) || { username: "", isLoggedIn: false });
+
+    function setLocal(newItem) {
+      sessionStorage.setItem(item, JSON.stringify(newItem));
+      setState(newItem);
+    };
+    return [local, setLocal]
+  };
+  
   const handleSubmit = async e => {
     e.preventDefault();
     const { email, password } = login;
@@ -33,7 +40,7 @@ const App = () => {
       if (token) {
         Session.setSession(token);
         setLogin({ email: "", password: "" });
-        setErrors([])
+        setErrors([]);
         setUser({ username, isLoggedIn: true });
       }
       if (errors) {

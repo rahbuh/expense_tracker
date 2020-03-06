@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useContext } from "react";
 import { ExpenseCard } from "./ExpenseCard";
 import { Button } from "./Button";
 import { Modal } from "./Modal";
@@ -10,8 +10,11 @@ import {
 } from "../../api/userExpense";
 import { getUserCategoriesAPI, getUserPayTypesAPI } from "../../api/userLists";
 import Session from "../../helpers/session";
+import AuthContext from "../../context/auth";
 
 const Expenses = () => {
+  const { handleLogOut } = useContext(AuthContext);
+
   const [isLoading, setIsLoading] = useState();
   const [userExpenses, setExpenses] = useState([]);
   const [userCategories, setUserCategories] = useState([]);
@@ -58,14 +61,14 @@ const Expenses = () => {
     loadUserData();
   }, []);
 
-  const handleErrors = result => {
-    if (result.errors) {
-      // DISPLAY ERRORS ??
-      console.log(result.errors);
+  const handleErrors = ({ errors, status }) => {
+    if (errors) {
+      console.error(errors);
     }
-    if (result.status) {
-      // VALIDATION ERROR, REDIRECT TO LOGIN PAGE
-      console.log("Error Status: ", result.status);
+    if (status) {
+      if (status === 401 || status === 403) {
+        handleLogOut()
+      }
     }
   };
 
@@ -83,7 +86,6 @@ const Expenses = () => {
   };
 
   const addNewExpense = () => {
-    // SET ALL FIELDS TO EMPTY
     setExpenseData(prevState => {
       const update = { ...prevState };
       for (let key in update) update[key] = "";

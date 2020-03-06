@@ -13,7 +13,7 @@ const Navbar = () => {
           <NavbarLeft message={`Welcome, ${user.username}!`} />
           <NavbarRight
             link1={{ path: "/user/expenses", text: "My Expenses" }}
-            link2={{ path: "/", text: "Log Out" }}
+            link2={{ path: "/login", text: "Log Out" }}
             logout={handleLogOut}
           />
         </Fragment>
