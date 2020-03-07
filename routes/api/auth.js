@@ -1,10 +1,10 @@
 const express = require("express");
-// const bcrypt = require("bcryptjs");
+const bcrypt = require("bcryptjs");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const createJWT = require("../../helpers/createJWT");
 
-// const User = require("../../models/User");
+const User = require("../../models/User");
 
 // USER LOGIN
 router.post(
@@ -19,24 +19,23 @@ router.post(
     const { email, password } = req.body;
 
     try {
-      // let user = await User.findOne({ email });
+      let user = await User.findOne({ email });
 
-      // if (!user) {
-      //   return res
-      //     .status(400)
-      //     .json({ errors: [{ msg: "Invalid Credentials" }] });
-      // }
+      if (!user) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: "Invalid Credentials" }] });
+      }
 
-      // const isMatch = await bcrypt.compare(password, user.password);
+      const isMatch = await bcrypt.compare(password, user.password);
 
-      // if (!isMatch) {
-      //   return res
-      //     .status(400)
-      //     .json({ errors: [{ msg: "Invalid Credentials" }] });
-      // }
+      if (!isMatch) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: "Invalid Credentials" }] });
+      }
 
-      // res.json(await createJWT(user.id, user.name));
-      res.json(await createJWT("5e61f842c20c3b25948d965d", "Robert"));
+      res.json(await createJWT(user.id, user.name));
     } catch (err) {
       console.error(err.message);
       res.status(500).json({ errors: [{ msg: "Server Error" }] });
