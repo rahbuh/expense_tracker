@@ -7,7 +7,8 @@ const Login = () => {
   const { user, errors, handleChange, handleSubmit } = useContext(AuthContext);
 
   if (user.isLoggedIn) {
-    return <Redirect to="/user/expenses" />;
+    // return <Redirect to="/user/expenses" />;
+    console.log("IsLoggedIn = true")
   }
 
   const alert = errors.map((error, index) => (

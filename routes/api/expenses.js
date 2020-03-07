@@ -10,10 +10,11 @@ const Expense = require("../../models/Expense");
 // GET ALL EXPENSES FOR USER
 router.get("/", checkAuth, async (req, res) => {
   try {
-    const expenses = await Expense.find({ user: req.user.id });
-    const { token } = await createJWT(req.user.id, req.user.name);
+    // const expenses = await Expense.find({ user: req.user.id });
+    // const { token } = await createJWT(req.user.id, req.user.name);
 
-    res.json({ success: expenses, newtoken: token });
+    // res.json({ success: expenses, newtoken: token });
+    res.json({ success: [], newtoken: '12345' });
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ errors: [{ msg: "Server Error" }] });
