@@ -18,3 +18,36 @@ This project was my first experience with using MongoDB as a database. I really 
 <img src="./readme-images/node.png" width="60">&nbsp;&nbsp;
 <img src="./readme-images/postman.svg" width="50">&nbsp;&nbsp;
 <img src="./readme-images/heroku.svg" width="40">
+
+### Technical
+- Front End (JavaScript)
+  - React (main SPA)
+  - Axios (HTTP requests)
+- Back End (Node)
+  - Express (Serving static site, internal API endpoints)
+  - BCrypt (Password encryption)
+  - JSON Web Tokens (User Authentication)
+- Database (MongoDB)
+- Hosts
+  - Heroku
+
+### Prerequisites
+
+- Expense Tracker requires a MongoDB database. You will need to install MongoDB locally, or create a free Atlas cloud database at <a href="https://www.mongodb.com/" target="_blank">https://www.mongodb.com/</a>.
+- The path to connect to your MongoDB database will need to be added to the `.env.sample` file located in the root folder. Replace the empty quotes next to `MONGODB_URI=` with the path.
+- You will also need to add a secret to the `.env.sample` file for creating the JSON web tokens. Replace the empty quotes next to `JWTSECRET=` with a random string (16 characters min).  
+- Once both the MongoDB path and JWT secret have been added, save and rename `.env.sample` to `.env`
+
+You need to have node/npm installed on your machine to run the app locally. To install node, go to <a href="https://nodejs.org/" target="_blank">https://nodejs.org/</a>.
+
+### Install
+
+- From the root directory, run: `npm install`
+- cd into /client and run: `npm install`
+- once installed, to start the application, from the root directory run: `npm run watch`
+
+### Resources Used
+- <a href="https://www.udemy.com/modern-react-front-to-back/" target="_blank">Udemy - React Front To Back 2019 by Brad Traversy</a>
+- <a href="https://scrimba.com/g/greact" target="_blank">Scrimba - React Bootcamp</a>
+- <a href="https://youtu.be/kQKs7o-X0zc" target="_blank">YouTube - React Hooks - Local Storage State (
+by Web Dev Profesh)</a>
